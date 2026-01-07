@@ -129,7 +129,23 @@
                 </div>
                 <div class="purity-shield glass-card">
                     <div class="shield-icon">&#128737;</div>
-                    <div class="shield-content"><h3>Purity Shield</h3><div class="shield-days"><span class="shield-number" id="purity-days-home">0</span><span class="shield-label">Days Strong</span></div><p class="shield-message" id="purity-message-home">Start your journey today</p></div>
+                    <div class="shield-content">
+                        <h3>Purity Shield</h3>
+                        <div class="shield-days"><span class="shield-number" id="purity-days-home">0</span><span class="shield-label">Days Strong</span></div>
+                        <p class="shield-message" id="purity-message-home">Start your journey today</p>
+                        <div class="purity-tiers">
+                            <button class="tier-btn" id="morning-pure-btn" data-tier="morning">
+                                <span class="tier-icon">&#9728;</span>
+                                <span class="tier-label">Morning Clear</span>
+                                <span class="tier-xp">+15 XP</span>
+                            </button>
+                            <button class="tier-btn" id="evening-pure-btn" data-tier="evening">
+                                <span class="tier-icon">&#127769;</span>
+                                <span class="tier-label">Evening Clear</span>
+                                <span class="tier-xp">+15 XP</span>
+                            </button>
+                        </div>
+                    </div>
                     <button class="shield-reset-btn" id="reset-shield-btn">Reset</button>
                 </div>
             </section>
@@ -148,7 +164,13 @@
 
             <!-- DEVOTIONAL -->
             <section id="devotional-page" class="page">
-                <header class="page-header-main"><div><h1>&#128214; Daily Devotional</h1><p id="devotional-date"></p></div></header>
+                <header class="page-header-main"><div><h1>&#128214; Daily Devotional</h1><p id="devotional-date"></p></div>
+                    <div class="devotional-nav-controls">
+                        <button class="btn-secondary" id="prev-devo-btn">← Previous</button>
+                        <button class="btn-secondary" id="today-devo-btn">Today</button>
+                        <button class="btn-secondary" id="next-devo-btn">Next →</button>
+                    </div>
+                </header>
                 <div class="devotional-container">
                     <div class="devotional-card glass-card">
                         <div class="devotional-header"><span class="devotional-day" id="devo-day">Day 1 of 365</span><span class="devotional-theme" id="devo-theme">Faith</span></div>
@@ -241,7 +263,7 @@
                     </div>
                     <div class="bible-reader glass-card">
                         <h3>&#128214; ESV Bible Reader</h3>
-                        <div class="reader-controls">
+                        <div class="bible-reader-controls">
                             <select id="reader-book">
                                 <option value="">Select Book</option>
                                 <optgroup label="Old Testament">
@@ -319,9 +341,9 @@
                             <button class="btn-primary" id="load-chapter-btn">Read</button>
                         </div>
                         <div id="bible-text-container"></div>
-                        <div class="reader-nav">
-                            <button class="btn-secondary" id="prev-chapter-btn">Previous</button>
-                            <button class="btn-secondary" id="next-chapter-btn">Next</button>
+                        <div class="chapter-nav">
+                            <button class="btn-secondary" id="prev-chapter-btn">← Previous</button>
+                            <button class="btn-secondary" id="next-chapter-btn">Next →</button>
                         </div>
                     </div>
                 </div>

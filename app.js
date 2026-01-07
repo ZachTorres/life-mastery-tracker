@@ -84,6 +84,14 @@ let state = {
     chaptersRead: 0,
     bibleStreak: 0,
     lastBibleDate: null,
+    currentDevotionalOffset: 0, // For navigating past devotionals
+
+    // Purity Tiers
+    morningPureToday: false,
+    eveningPureToday: false,
+
+    // Achievement bonus clicks
+    achievementBonusClicks: {}, // Track bonus XP clicks per achievement
 
     // Journal
     journalEntries: 0,
@@ -149,6 +157,9 @@ function checkNewDay() {
         state.todayQuests = {};
         state.todayXP = 0;
         state.devotionalReadToday = false;
+        state.morningPureToday = false;
+        state.eveningPureToday = false;
+        state.currentDevotionalOffset = 0;
         state.lastActiveDate = today;
 
         // Update purity days
@@ -352,6 +363,53 @@ function recordVictory() {
 }
 
 // ==========================================
+// PURITY TIER SYSTEM
+// ==========================================
+function completePurityTier(tier) {
+    if (tier === "morning" && !state.morningPureToday) {
+        state.morningPureToday = true;
+        addXP(15, "Morning purity!");
+        showToast("☀️ Morning clear! Keep it up!", "success");
+        updatePurityTierButtons();
+
+        // Check if both tiers complete - gives the full quest completion
+        if (state.morningPureToday && state.eveningPureToday) {
+            completeQuest("purity");
+        }
+    } else if (tier === "evening" && !state.eveningPureToday) {
+        state.eveningPureToday = true;
+        addXP(15, "Evening purity!");
+        showToast("🌙 Evening clear! Full day conquered!", "success");
+        updatePurityTierButtons();
+
+        // Check if both tiers complete - gives the full quest completion
+        if (state.morningPureToday && state.eveningPureToday) {
+            completeQuest("purity");
+        }
+    }
+    saveState();
+}
+
+function updatePurityTierButtons() {
+    const morningBtn = document.getElementById("morning-pure-btn");
+    const eveningBtn = document.getElementById("evening-pure-btn");
+
+    if (morningBtn) {
+        morningBtn.classList.toggle("completed", state.morningPureToday);
+        if (state.morningPureToday) {
+            morningBtn.querySelector(".tier-xp").textContent = "✓ Done";
+        }
+    }
+
+    if (eveningBtn) {
+        eveningBtn.classList.toggle("completed", state.eveningPureToday);
+        if (state.eveningPureToday) {
+            eveningBtn.querySelector(".tier-xp").textContent = "✓ Done";
+        }
+    }
+}
+
+// ==========================================
 // ACHIEVEMENTS
 // ==========================================
 function checkAchievements() {
@@ -388,8 +446,42 @@ function getDayOfYear() {
 
 function getTodayDevotional() {
     const dayOfYear = getDayOfYear();
-    const index = (dayOfYear - 1) % window.DEVOTIONALS.length;
-    return window.DEVOTIONALS[index];
+    const index = (dayOfYear - 1 + state.currentDevotionalOffset) % window.DEVOTIONALS.length;
+    // Handle negative index
+    const adjustedIndex = index < 0 ? window.DEVOTIONALS.length + index : index;
+    return window.DEVOTIONALS[adjustedIndex];
+}
+
+function getDevotionalDayNumber() {
+    const dayOfYear = getDayOfYear();
+    return dayOfYear + state.currentDevotionalOffset;
+}
+
+function navigateDevotional(direction) {
+    if (direction === "prev") {
+        state.currentDevotionalOffset--;
+    } else if (direction === "next") {
+        // Don't go into the future
+        if (state.currentDevotionalOffset < 0) {
+            state.currentDevotionalOffset++;
+        }
+    } else if (direction === "today") {
+        state.currentDevotionalOffset = 0;
+    }
+    renderDevotional();
+    updateDevotionalNavButtons();
+}
+
+function updateDevotionalNavButtons() {
+    const nextBtn = document.getElementById("next-devo-btn");
+    const todayBtn = document.getElementById("today-devo-btn");
+
+    if (nextBtn) {
+        nextBtn.disabled = state.currentDevotionalOffset >= 0;
+    }
+    if (todayBtn) {
+        todayBtn.disabled = state.currentDevotionalOffset === 0;
+    }
 }
 
 function markDevotionalRead() {
@@ -587,6 +679,7 @@ function updateAllDisplays() {
     updateScriptureDisplay();
     updateQuestProgress();
     updatePurityDisplay();
+    updatePurityTierButtons();
     updateCharacterCard();
     updateStatsPage();
     renderQuests();
@@ -779,7 +872,7 @@ function renderQuests() {
 
 function renderDevotional() {
     const devo = getTodayDevotional();
-    const dayOfYear = getDayOfYear();
+    const displayDay = getDevotionalDayNumber();
 
     const devoDay = document.getElementById("devo-day");
     const devoTheme = document.getElementById("devo-theme");
@@ -790,7 +883,12 @@ function renderDevotional() {
     const devoAction = document.getElementById("devo-action");
     const devoPrayer = document.getElementById("devo-prayer");
 
-    if (devoDay) devoDay.textContent = `Day ${dayOfYear} of 365`;
+    if (devoDay) {
+        const dayLabel = state.currentDevotionalOffset === 0 ? "Today" :
+            state.currentDevotionalOffset === -1 ? "Yesterday" :
+            `Day ${Math.max(1, displayDay)}`;
+        devoDay.textContent = `${dayLabel} of 365`;
+    }
     if (devoTheme) devoTheme.textContent = devo.theme;
     if (devoVerse) devoVerse.textContent = `"${devo.verse}"`;
     if (devoVerseRef) devoVerseRef.textContent = `- ${devo.ref}`;
@@ -805,12 +903,23 @@ function renderDevotional() {
     if (chaptersRead) chaptersRead.textContent = state.chaptersRead;
     if (readingStreak) readingStreak.textContent = state.bibleStreak;
 
-    // Update devotional button
+    // Update devotional button - only allow marking today's as read
     const btn = document.getElementById("mark-read-btn");
-    if (btn && state.devotionalReadToday) {
-        btn.textContent = "✓ Completed!";
-        btn.disabled = true;
+    if (btn) {
+        if (state.currentDevotionalOffset !== 0) {
+            btn.textContent = "📅 Go to Today to Mark Complete";
+            btn.disabled = true;
+        } else if (state.devotionalReadToday) {
+            btn.textContent = "✓ Completed!";
+            btn.disabled = true;
+        } else {
+            btn.textContent = "✓ I Read Today's Devotional (+25 XP)";
+            btn.disabled = false;
+        }
     }
+
+    // Update devotional nav buttons
+    updateDevotionalNavButtons();
 }
 
 function renderAchievements() {
@@ -819,14 +928,52 @@ function renderAchievements() {
 
     container.innerHTML = ACHIEVEMENTS.map(ach => {
         const unlocked = state.unlockedAchievements.includes(ach.id);
+        const bonusClicks = state.achievementBonusClicks[ach.id] || 0;
         return `
-            <div class="achievement ${unlocked ? "unlocked" : ""}">
+            <div class="achievement ${unlocked ? "unlocked" : ""}" data-id="${ach.id}" onclick="claimAchievementBonus('${ach.id}')">
                 <span class="achievement-icon">${ach.icon}</span>
                 <span class="achievement-name">${ach.name}</span>
+                ${unlocked ? `<span class="achievement-bonus">+5 XP${bonusClicks > 0 ? ` (×${bonusClicks})` : ""}</span>` : ""}
             </div>
         `;
     }).join("");
 }
+
+function claimAchievementBonus(achievementId) {
+    const unlocked = state.unlockedAchievements.includes(achievementId);
+    if (!unlocked) {
+        showToast("Unlock this achievement first!", "info");
+        return;
+    }
+
+    const ach = ACHIEVEMENTS.find(a => a.id === achievementId);
+    if (!ach) return;
+
+    // Track bonus clicks
+    if (!state.achievementBonusClicks[achievementId]) {
+        state.achievementBonusClicks[achievementId] = 0;
+    }
+    state.achievementBonusClicks[achievementId]++;
+
+    // Add bonus XP (diminishing returns after 3 clicks per day)
+    const clicks = state.achievementBonusClicks[achievementId];
+    const bonusXP = clicks <= 3 ? 5 : Math.max(1, 5 - clicks + 3);
+
+    addXP(bonusXP, `${ach.name} bonus!`);
+
+    // Visual feedback
+    const element = document.querySelector(`.achievement[data-id="${achievementId}"]`);
+    if (element) {
+        element.classList.add("clicked");
+        setTimeout(() => element.classList.remove("clicked"), 300);
+    }
+
+    saveState();
+    renderAchievements();
+}
+
+// Make function globally accessible
+window.claimAchievementBonus = claimAchievementBonus;
 
 function renderWeeklyHeatmap() {
     const container = document.getElementById("weekly-heatmap");
@@ -885,10 +1032,21 @@ function showToast(message, type = "info") {
     const container = document.getElementById("toast-container");
     const toast = document.createElement("div");
     toast.className = `toast ${type}`;
-    toast.innerHTML = `<span>${type === "xp" ? "⚡" : type === "success" ? "✓" : "ℹ"}</span>${message}`;
+
+    const icons = {
+        xp: "⚡",
+        success: "✓",
+        error: "✕",
+        info: "ℹ"
+    };
+
+    toast.innerHTML = `<div class="toast-icon">${icons[type] || icons.info}</div><span>${message}</span>`;
     container.appendChild(toast);
 
-    setTimeout(() => toast.remove(), 3000);
+    setTimeout(() => {
+        toast.classList.add("fade-out");
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 }
 
 // ==========================================
@@ -955,6 +1113,15 @@ function setupEventListeners() {
     // Devotional
     document.getElementById("mark-read-btn")?.addEventListener("click", markDevotionalRead);
     document.getElementById("log-reading-btn")?.addEventListener("click", logBibleReading);
+
+    // Devotional navigation
+    document.getElementById("prev-devo-btn")?.addEventListener("click", () => navigateDevotional("prev"));
+    document.getElementById("next-devo-btn")?.addEventListener("click", () => navigateDevotional("next"));
+    document.getElementById("today-devo-btn")?.addEventListener("click", () => navigateDevotional("today"));
+
+    // Purity tier buttons
+    document.getElementById("morning-pure-btn")?.addEventListener("click", () => completePurityTier("morning"));
+    document.getElementById("evening-pure-btn")?.addEventListener("click", () => completePurityTier("evening"));
 
     // Journal
     document.getElementById("save-journal-btn")?.addEventListener("click", saveJournalEntry);
