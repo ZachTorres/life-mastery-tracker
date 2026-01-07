@@ -23,14 +23,14 @@ const LEVELS = [
 ];
 
 const DEFAULT_QUESTS = [
-    { id: "bible", name: "Read Bible", icon: "📖", xp: 20, category: "spiritual" },
-    { id: "workout", name: "Workout", icon: "💪", xp: 25, category: "health" },
-    { id: "job", name: "Apply to Job", icon: "💼", xp: 30, category: "career" },
-    { id: "skills", name: "Build Skills", icon: "🎯", xp: 25, category: "growth" },
-    { id: "business", name: "Business Work", icon: "🚀", xp: 30, category: "business" },
+    { id: "bible", name: "Read Bible", icon: "📖", xp: 35, category: "spiritual" },
+    { id: "purity", name: "Stay Pure", icon: "🛡️", xp: 30, category: "purity" },
+    { id: "devotional", name: "Read Devotional", icon: "📚", xp: 25, category: "spiritual" },
+    { id: "workout", name: "Workout", icon: "💪", xp: 20, category: "health" },
+    { id: "job", name: "Apply to Job", icon: "💼", xp: 20, category: "career" },
+    { id: "skills", name: "Build Skills", icon: "🎯", xp: 20, category: "growth" },
+    { id: "business", name: "Business Work", icon: "🚀", xp: 20, category: "business" },
     { id: "healthy", name: "Eat Healthy", icon: "🥗", xp: 15, category: "health" },
-    { id: "purity", name: "Stay Pure", icon: "🛡️", xp: 20, category: "purity" },
-    { id: "devotional", name: "Read Devotional", icon: "📚", xp: 20, category: "spiritual" },
 ];
 
 const ACHIEVEMENTS = [
@@ -1008,4 +1008,109 @@ window.toggleQuest = toggleQuest;
 window.viewJournalEntry = (id) => {
     const entry = state.journals.find(j => j.id === id);
     if (entry) alert(entry.content);
+};
+
+// ==========================================
+// ESV BIBLE READER
+// ==========================================
+let currentBook = "";
+let currentChapter = 1;
+
+function setupBibleReader() {
+    const loadBtn = document.getElementById("load-chapter-btn");
+    const prevBtn = document.getElementById("prev-chapter-btn");
+    const nextBtn = document.getElementById("next-chapter-btn");
+    const readerBook = document.getElementById("reader-book");
+    const readerChapter = document.getElementById("reader-chapter");
+
+    if (loadBtn) {
+        loadBtn.addEventListener("click", () => {
+            const book = readerBook?.value;
+            const chapter = parseInt(readerChapter?.value) || 1;
+            if (book) {
+                loadBibleChapter(book, chapter);
+            } else {
+                showToast("Please select a book", "error");
+            }
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener("click", () => {
+            if (currentChapter > 1) {
+                currentChapter--;
+                if (readerChapter) readerChapter.value = currentChapter;
+                loadBibleChapter(currentBook, currentChapter);
+            }
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener("click", () => {
+            currentChapter++;
+            if (readerChapter) readerChapter.value = currentChapter;
+            loadBibleChapter(currentBook, currentChapter);
+        });
+    }
+}
+
+async function loadBibleChapter(book, chapter) {
+    const container = document.getElementById("bible-text-container");
+    const prevBtn = document.getElementById("prev-chapter-btn");
+    const nextBtn = document.getElementById("next-chapter-btn");
+
+    if (!container) return;
+
+    container.innerHTML = '<p class="bible-loading">Loading...</p>';
+    currentBook = book;
+    currentChapter = chapter;
+
+    try {
+        // Using ESV API (free for personal use)
+        const passage = `${book}+${chapter}`;
+        const response = await fetch(`https://api.esv.org/v3/passage/text/?q=${passage}&include-headings=true&include-footnotes=false&include-verse-numbers=true&include-short-copyright=false&include-passage-references=false`, {
+            headers: {
+                'Authorization': 'Token 4b94d89be9e44a388c5802410ad64f93a61b6da2'
+            }
+        });
+
+        if (!response.ok) throw new Error("Failed to load");
+
+        const data = await response.json();
+        const text = data.passages?.[0] || "Chapter not found";
+
+        // Format the text with proper styling
+        const formattedText = text
+            .split(/\[(\d+)\]/)
+            .map((part, i) => {
+                if (i % 2 === 1) {
+                    return `<span class="verse-num">${part}</span>`;
+                }
+                return part;
+            })
+            .join("");
+
+        container.innerHTML = `
+            <h4 class="chapter-title">${book.replace(/\+/g, " ")} ${chapter}</h4>
+            <div class="bible-text">${formattedText}</div>
+        `;
+
+        // Enable navigation buttons
+        if (prevBtn) prevBtn.disabled = chapter <= 1;
+        if (nextBtn) nextBtn.disabled = false;
+
+    } catch (error) {
+        console.error("Bible load error:", error);
+        container.innerHTML = `
+            <p class="bible-error">Unable to load chapter. Try again later.</p>
+            <p class="bible-fallback">You can read online at <a href="https://www.esv.org/${book.replace(/\+/g, "")}+${chapter}" target="_blank">ESV.org</a></p>
+        `;
+    }
+}
+
+// Add Bible reader setup to initialization
+const originalSetupEventListeners = setupEventListeners;
+setupEventListeners = function() {
+    originalSetupEventListeners();
+    setupBibleReader();
 };
