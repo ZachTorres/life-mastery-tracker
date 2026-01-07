@@ -1233,32 +1233,28 @@ async function loadBibleChapter(book, chapter) {
     currentChapter = chapter;
 
     try {
-        // Using ESV API (free for personal use)
-        const passage = `${book}+${chapter}`;
-        const response = await fetch(`https://api.esv.org/v3/passage/text/?q=${passage}&include-headings=true&include-footnotes=false&include-verse-numbers=true&include-short-copyright=false&include-passage-references=false`, {
-            headers: {
-                'Authorization': 'Token 4b94d89be9e44a388c5802410ad64f93a61b6da2'
-            }
-        });
+        // Using Bible API (free, no auth needed, CORS-friendly)
+        const bookName = book.replace(/\+/g, " ");
+        const response = await fetch(`https://bible-api.com/${encodeURIComponent(bookName)}+${chapter}?translation=kjv`);
 
         if (!response.ok) throw new Error("Failed to load");
 
         const data = await response.json();
-        const text = data.passages?.[0] || "Chapter not found";
 
-        // Format the text with proper styling
-        const formattedText = text
-            .split(/\[(\d+)\]/)
-            .map((part, i) => {
-                if (i % 2 === 1) {
-                    return `<span class="verse-num">${part}</span>`;
-                }
-                return part;
-            })
-            .join("");
+        if (data.error) throw new Error(data.error);
+
+        // Format verses with verse numbers
+        let formattedText = "";
+        if (data.verses && data.verses.length > 0) {
+            formattedText = data.verses.map(v =>
+                `<span class="verse-num">${v.verse}</span>${v.text}`
+            ).join(" ");
+        } else if (data.text) {
+            formattedText = data.text;
+        }
 
         container.innerHTML = `
-            <h4 class="chapter-title">${book.replace(/\+/g, " ")} ${chapter}</h4>
+            <h4 class="chapter-title">${bookName} ${chapter}</h4>
             <div class="bible-text">${formattedText}</div>
         `;
 
@@ -1270,7 +1266,7 @@ async function loadBibleChapter(book, chapter) {
         console.error("Bible load error:", error);
         container.innerHTML = `
             <p class="bible-error">Unable to load chapter. Try again later.</p>
-            <p class="bible-fallback">You can read online at <a href="https://www.esv.org/${book.replace(/\+/g, "")}+${chapter}" target="_blank">ESV.org</a></p>
+            <p class="bible-fallback">You can read online at <a href="https://www.biblegateway.com/passage/?search=${encodeURIComponent(book.replace(/\+/g, " "))}+${chapter}&version=ESV" target="_blank">BibleGateway.com</a></p>
         `;
     }
 }
