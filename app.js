@@ -1,4 +1,4 @@
-// Life Quest - Main Application Logic
+﻿// Life Quest - Main Application Logic
 // Gamified Self-Improvement Tracker
 
 // ==========================================
@@ -100,13 +100,17 @@ let state = {
 // INITIALIZATION
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-    loadState();
-    checkNewDay();
-    initializeUI();
-    setupEventListeners();
-    updateAllDisplays();
+    try {
+        console.log("Life Quest: Initializing...");
+        loadState();
+        checkNewDay();
+        setupEventListeners();
+        updateAllDisplays();
+        console.log("Life Quest: Initialization complete!");
+    } catch (error) {
+        console.error("Life Quest: Initialization error:", error);
+    }
 });
-
 function loadState() {
     const saved = localStorage.getItem("lifequest_state");
     if (saved) {
