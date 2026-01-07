@@ -2,543 +2,225 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Mastery Tracker - Become Your Best Self</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Life Quest - Level Up Your Life</title>
+    <meta name="theme-color" content="#0a0a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar">
-            <div class="logo">
-                <span class="logo-icon">&#9775;</span>
-                <h1>Life Mastery</h1>
+    <div class="bg-gradient"></div>
+    <div class="bg-grid"></div>
+
+    <!-- PANIC OVERLAY -->
+    <div id="panic-overlay" class="panic-overlay hidden">
+        <div class="panic-content">
+            <button class="panic-close" id="panic-close">&times;</button>
+            <div class="panic-header">
+                <div class="panic-icon pulse">&#128737;</div>
+                <h1>You Are Not Alone</h1>
+                <p class="panic-subtitle">Take a deep breath. God is with you right now.</p>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item active" data-page="dashboard">
-                    <span class="nav-icon">&#9783;</span>
-                    <span>Dashboard</span>
-                </li>
-                <li class="nav-item" data-page="goals">
-                    <span class="nav-icon">&#9733;</span>
-                    <span>My Goals</span>
-                </li>
-                <li class="nav-item" data-page="habits">
-                    <span class="nav-icon">&#10003;</span>
-                    <span>Daily Habits</span>
-                </li>
-                <li class="nav-item" data-page="journal">
-                    <span class="nav-icon">&#9998;</span>
-                    <span>Journal</span>
-                </li>
-                <li class="nav-item" data-page="accountability">
-                    <span class="nav-icon">&#128170;</span>
-                    <span>Accountability</span>
-                </li>
-                <li class="nav-item" data-page="blockers">
-                    <span class="nav-icon">&#128274;</span>
-                    <span>Content Blockers</span>
-                </li>
-                <li class="nav-item" data-page="scripture">
-                    <span class="nav-icon">&#128214;</span>
-                    <span>Scripture</span>
-                </li>
-                <li class="nav-item" data-page="stats">
-                    <span class="nav-icon">&#128200;</span>
-                    <span>Statistics</span>
-                </li>
-            </ul>
-            <div class="sidebar-footer">
-                <div class="streak-display">
-                    <span class="streak-fire">&#128293;</span>
-                    <span id="total-streak">0</span> day streak
+            <div class="panic-scripture-hero">
+                <blockquote id="panic-main-verse">"No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear."</blockquote>
+                <cite>- 1 Corinthians 10:13</cite>
+            </div>
+            <div class="panic-category-select">
+                <h3>What are you struggling with?</h3>
+                <div class="panic-categories">
+                    <button class="panic-cat-btn active" data-category="lust">&#128293; Lust</button>
+                    <button class="panic-cat-btn" data-category="anxiety">&#128560; Anxiety</button>
+                    <button class="panic-cat-btn" data-category="depression">&#127783; Depression</button>
+                    <button class="panic-cat-btn" data-category="anger">&#128548; Anger</button>
+                    <button class="panic-cat-btn" data-category="fear">&#128552; Fear</button>
+                    <button class="panic-cat-btn" data-category="loneliness">&#128148; Loneliness</button>
                 </div>
             </div>
-        </nav>
-
-        <!-- Main Content -->
-        <main class="main-content">
-            <!-- Header -->
-            <header class="header">
-                <div class="header-left">
-                    <h2 id="page-title">Dashboard</h2>
-                    <p id="current-date"></p>
+            <div class="panic-steps" id="panic-steps"></div>
+            <div class="panic-breathing">
+                <h3>Breathe With Me</h3>
+                <div class="breathing-circle" id="breathing-circle">
+                    <span id="breathing-text">Breathe In</span>
                 </div>
-                <div class="header-right">
-                    <div class="motivation-quote" id="daily-quote">
-                        "The only way to do great work is to love what you do."
-                    </div>
+                <button class="btn-glow" id="start-breathing">Start Breathing Exercise</button>
+            </div>
+            <div class="panic-verses" id="panic-verses"></div>
+            <div class="panic-actions">
+                <button class="btn-victory" id="victory-btn">&#9876; I Overcame This!</button>
+                <button class="btn-secondary-panic" id="need-more-btn">I Need More Help</button>
+            </div>
+            <div class="panic-resources hidden" id="panic-resources">
+                <h3>Additional Resources</h3>
+                <div class="resource-cards">
+                    <a href="https://www.covenanteyes.com" target="_blank" class="resource-card"><span>&#128737;</span><h4>Covenant Eyes</h4></a>
+                    <a href="tel:988" class="resource-card"><span>&#128222;</span><h4>Crisis: 988</h4></a>
                 </div>
-            </header>
-
-            <!-- Page Content -->
-            <div class="page-content">
-                <!-- Dashboard Page -->
-                <section id="dashboard-page" class="page active">
-                    <div class="dashboard-grid">
-                        <!-- Today's Progress Card -->
-                        <div class="card progress-card">
-                            <h3>Today's Progress</h3>
-                            <div class="progress-ring-container">
-                                <svg class="progress-ring" width="200" height="200">
-                                    <circle class="progress-ring-bg" cx="100" cy="100" r="80"/>
-                                    <circle class="progress-ring-fill" id="main-progress-ring" cx="100" cy="100" r="80"/>
-                                </svg>
-                                <div class="progress-text">
-                                    <span id="progress-percentage">0%</span>
-                                    <span class="progress-label">Complete</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Quick Habits Card -->
-                        <div class="card habits-quick-card">
-                            <h3>Today's Habits</h3>
-                            <div id="quick-habits-list" class="quick-habits-list">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                        </div>
-
-                        <!-- Streaks Card -->
-                        <div class="card streaks-card">
-                            <h3>Current Streaks</h3>
-                            <div id="streaks-display" class="streaks-grid">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                        </div>
-
-                        <!-- Scripture of the Day -->
-                        <div class="card scripture-card">
-                            <h3>&#128214; Scripture of the Day</h3>
-                            <blockquote id="daily-scripture">
-                                <p class="verse-text"></p>
-                                <cite class="verse-reference"></cite>
-                            </blockquote>
-                            <button class="btn btn-secondary" id="new-scripture-btn">New Verse</button>
-                        </div>
-
-                        <!-- Accountability Timer -->
-                        <div class="card timer-card">
-                            <h3>&#128274; Purity Streak</h3>
-                            <div class="purity-timer" id="purity-timer">
-                                <div class="timer-value" id="purity-days">0</div>
-                                <div class="timer-label">Days Clean</div>
-                            </div>
-                            <div class="timer-actions">
-                                <button class="btn btn-danger" id="reset-purity-btn">Reset (Honesty is Key)</button>
-                            </div>
-                            <p class="purity-message" id="purity-message"></p>
-                        </div>
-
-                        <!-- Quick Actions -->
-                        <div class="card actions-card">
-                            <h3>Quick Actions</h3>
-                            <div class="quick-actions">
-                                <button class="action-btn" id="log-workout-btn">
-                                    <span>&#127947;</span>
-                                    Log Workout
-                                </button>
-                                <button class="action-btn" id="log-bible-btn">
-                                    <span>&#128214;</span>
-                                    Bible Read
-                                </button>
-                                <button class="action-btn" id="log-job-btn">
-                                    <span>&#128188;</span>
-                                    Job Applied
-                                </button>
-                                <button class="action-btn" id="log-skill-btn">
-                                    <span>&#128187;</span>
-                                    Skill Work
-                                </button>
-                                <button class="action-btn" id="log-healthy-btn">
-                                    <span>&#129367;</span>
-                                    Ate Healthy
-                                </button>
-                                <button class="action-btn" id="log-business-btn">
-                                    <span>&#128176;</span>
-                                    Business Work
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Goals Page -->
-                <section id="goals-page" class="page">
-                    <div class="page-header">
-                        <h3>My Life Goals</h3>
-                        <button class="btn btn-primary" id="add-goal-btn">+ Add Goal</button>
-                    </div>
-                    <div class="goals-container" id="goals-container">
-                        <!-- Goals populated by JavaScript -->
-                    </div>
-                </section>
-
-                <!-- Habits Page -->
-                <section id="habits-page" class="page">
-                    <div class="page-header">
-                        <h3>Daily Habits Tracker</h3>
-                        <button class="btn btn-primary" id="add-habit-btn">+ Add Habit</button>
-                    </div>
-                    <div class="habits-container">
-                        <div class="habits-list" id="habits-list">
-                            <!-- Habits populated by JavaScript -->
-                        </div>
-                        <div class="habits-calendar" id="habits-calendar">
-                            <!-- Calendar view -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Journal Page -->
-                <section id="journal-page" class="page">
-                    <div class="page-header">
-                        <h3>Daily Journal</h3>
-                    </div>
-                    <div class="journal-container">
-                        <div class="journal-prompts">
-                            <h4>Today's Reflection Prompts:</h4>
-                            <ul id="journal-prompts-list">
-                                <li>What am I grateful for today?</li>
-                                <li>What challenges did I overcome?</li>
-                                <li>How did I grow spiritually today?</li>
-                                <li>What can I do better tomorrow?</li>
-                            </ul>
-                        </div>
-                        <div class="journal-entry-area">
-                            <textarea id="journal-entry" placeholder="Write your thoughts here..."></textarea>
-                            <div class="journal-actions">
-                                <button class="btn btn-primary" id="save-journal-btn">Save Entry</button>
-                            </div>
-                        </div>
-                        <div class="past-entries" id="past-entries">
-                            <h4>Past Entries</h4>
-                            <!-- Past entries populated by JavaScript -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Accountability Page -->
-                <section id="accountability-page" class="page">
-                    <div class="page-header">
-                        <h3>Accountability Partner</h3>
-                    </div>
-                    <div class="accountability-container">
-                        <div class="accountability-intro card">
-                            <h4>&#128170; Stay Strong, Stay Accountable</h4>
-                            <p>This section helps you stay on track with your commitment to purity and self-control. Remember: every day is a victory.</p>
-                        </div>
-
-                        <div class="emergency-section card">
-                            <h4>&#128680; Feeling Tempted?</h4>
-                            <div class="emergency-actions">
-                                <button class="btn btn-warning" id="emergency-btn">
-                                    &#128680; EMERGENCY - I Need Help Now
-                                </button>
-                            </div>
-                            <div id="emergency-content" class="emergency-content hidden">
-                                <div class="emergency-steps">
-                                    <h5>Take These Steps RIGHT NOW:</h5>
-                                    <ol>
-                                        <li><strong>STOP</strong> - Close all browsers and apps immediately</li>
-                                        <li><strong>MOVE</strong> - Physically get up and leave the room</li>
-                                        <li><strong>CALL</strong> - Contact your accountability partner</li>
-                                        <li><strong>PRAY</strong> - Spend 5 minutes in prayer</li>
-                                        <li><strong>EXERCISE</strong> - Do 20 pushups or take a walk</li>
-                                    </ol>
-                                    <div class="scripture-help">
-                                        <blockquote>
-                                            "No temptation has overtaken you except what is common to mankind. And God is faithful; he will not let you be tempted beyond what you can bear."
-                                            <cite>- 1 Corinthians 10:13</cite>
-                                        </blockquote>
-                                    </div>
-                                    <button class="btn btn-success" id="i-resisted-btn">&#10003; I Resisted - Thank God!</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="accountability-stats card">
-                            <h4>Your Journey</h4>
-                            <div class="stats-grid">
-                                <div class="stat-item">
-                                    <span class="stat-value" id="current-streak-stat">0</span>
-                                    <span class="stat-label">Current Streak</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" id="best-streak-stat">0</span>
-                                    <span class="stat-label">Best Streak</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" id="total-clean-days">0</span>
-                                    <span class="stat-label">Total Clean Days</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" id="temptations-resisted">0</span>
-                                    <span class="stat-label">Temptations Resisted</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="why-section card">
-                            <h4>&#128173; My "Why" - Reasons to Stay Pure</h4>
-                            <div id="why-list" class="why-list">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                            <div class="add-why">
-                                <input type="text" id="new-why-input" placeholder="Add a reason to stay pure...">
-                                <button class="btn btn-primary" id="add-why-btn">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Content Blockers Page -->
-                <section id="blockers-page" class="page">
-                    <div class="page-header">
-                        <h3>&#128274; Content Blocking Guide</h3>
-                    </div>
-                    <div class="blockers-container">
-                        <div class="blocker-intro card">
-                            <h4>Setting Up Unbreakable Content Blockers</h4>
-                            <p>To truly protect yourself, you need system-level blocking that you cannot easily bypass. Here are the most effective solutions:</p>
-                        </div>
-
-                        <div class="blocker-section card">
-                            <h4>&#128175; NUCLEAR OPTION - Most Effective</h4>
-                            <div class="blocker-item">
-                                <h5>1. Covenant Eyes ($15.99/month)</h5>
-                                <p><strong>Why it's the best:</strong> Reports ALL your internet activity to an accountability partner. Cannot be easily bypassed. Works on all devices.</p>
-                                <ul>
-                                    <li>Monitors and reports all screen activity</li>
-                                    <li>Sends reports to your chosen accountability partner</li>
-                                    <li>Cannot be uninstalled without partner notification</li>
-                                    <li>Works on Windows, Mac, iOS, Android</li>
-                                </ul>
-                                <a href="https://www.covenanteyes.com" class="btn btn-primary" target="_blank">Get Covenant Eyes</a>
-                            </div>
-                        </div>
-
-                        <div class="blocker-section card">
-                            <h5>2. Accountable2You ($7.99/month)</h5>
-                            <p>Similar to Covenant Eyes, monitors all activity and sends reports to accountability partners.</p>
-                            <a href="https://www.accountable2you.com" class="btn btn-secondary" target="_blank">Learn More</a>
-                        </div>
-
-                        <div class="blocker-section card">
-                            <h4>&#128274; DNS-Level Blocking (Free)</h4>
-                            <div class="blocker-item">
-                                <h5>CleanBrowsing DNS</h5>
-                                <p>Blocks adult content at the network level. Harder to bypass than browser extensions.</p>
-                                <div class="dns-settings">
-                                    <p><strong>Family Filter DNS Servers:</strong></p>
-                                    <code>185.228.168.168</code><br>
-                                    <code>185.228.169.168</code>
-                                </div>
-                                <details>
-                                    <summary>How to set up on Windows</summary>
-                                    <ol>
-                                        <li>Open Control Panel > Network and Internet > Network and Sharing Center</li>
-                                        <li>Click on your connection, then Properties</li>
-                                        <li>Select "Internet Protocol Version 4 (TCP/IPv4)" > Properties</li>
-                                        <li>Select "Use the following DNS server addresses"</li>
-                                        <li>Enter: 185.228.168.168 and 185.228.169.168</li>
-                                        <li>Click OK on all windows</li>
-                                    </ol>
-                                </details>
-                            </div>
-
-                            <div class="blocker-item">
-                                <h5>OpenDNS FamilyShield</h5>
-                                <div class="dns-settings">
-                                    <code>208.67.222.123</code><br>
-                                    <code>208.67.220.123</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="blocker-section card">
-                            <h4>&#128241; Phone-Specific Solutions</h4>
-                            <div class="blocker-item">
-                                <h5>iPhone</h5>
-                                <ul>
-                                    <li>Use Screen Time with a passcode someone else sets</li>
-                                    <li>Enable "Limit Adult Websites" in Content Restrictions</li>
-                                    <li>Have someone else set the Screen Time passcode</li>
-                                </ul>
-                            </div>
-                            <div class="blocker-item">
-                                <h5>Android</h5>
-                                <ul>
-                                    <li>Install BlockerX or Detoxify</li>
-                                    <li>Use Google Family Link (have someone else control it)</li>
-                                    <li>Enable SafeSearch in Google settings</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="blocker-section card">
-                            <h4>&#128187; Browser Extensions (Least Secure)</h4>
-                            <p class="warning">Warning: These can be easily disabled. Use in addition to other methods, not alone.</p>
-                            <ul>
-                                <li><strong>BlockSite</strong> - Block specific websites</li>
-                                <li><strong>StayFocusd</strong> - Limit time on distracting sites</li>
-                                <li><strong>Cold Turkey</strong> - Strict blocker with scheduling</li>
-                            </ul>
-                        </div>
-
-                        <div class="blocker-section card important-card">
-                            <h4>&#9888; THE KEY TO SUCCESS</h4>
-                            <div class="key-points">
-                                <p><strong>1. Give control to someone else.</strong> Have an accountability partner set passwords you don't know.</p>
-                                <p><strong>2. Use multiple layers.</strong> DNS blocking + Accountability software + Phone restrictions.</p>
-                                <p><strong>3. Remove easy access.</strong> Delete social media apps that trigger you.</p>
-                                <p><strong>4. Create friction.</strong> The harder it is to access, the more time you have to choose wisely.</p>
-                            </div>
-                        </div>
-
-                        <div class="blocker-checklist card">
-                            <h4>&#10003; My Protection Checklist</h4>
-                            <div class="checklist" id="protection-checklist">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="check-covenant"> Installed Covenant Eyes or similar
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="check-dns"> Changed DNS settings
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="check-phone"> Set up phone restrictions
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="check-partner"> Have an accountability partner
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="check-social"> Removed triggering social media apps
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="check-location"> Keep devices in public areas
-                                </label>
-                            </div>
-                            <button class="btn btn-primary" id="save-checklist-btn">Save Checklist</button>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Scripture Page -->
-                <section id="scripture-page" class="page">
-                    <div class="page-header">
-                        <h3>&#128214; Scripture & Devotional</h3>
-                    </div>
-                    <div class="scripture-container">
-                        <div class="bible-reading-plan card">
-                            <h4>Bible Reading Progress</h4>
-                            <div class="reading-tracker">
-                                <label>Current Book:</label>
-                                <select id="current-book">
-                                    <option value="genesis">Genesis</option>
-                                    <option value="exodus">Exodus</option>
-                                    <option value="leviticus">Leviticus</option>
-                                    <option value="numbers">Numbers</option>
-                                    <option value="deuteronomy">Deuteronomy</option>
-                                    <option value="matthew">Matthew</option>
-                                    <option value="mark">Mark</option>
-                                    <option value="luke">Luke</option>
-                                    <option value="john">John</option>
-                                    <option value="acts">Acts</option>
-                                    <option value="romans">Romans</option>
-                                    <option value="psalms">Psalms</option>
-                                    <option value="proverbs">Proverbs</option>
-                                </select>
-                                <label>Current Chapter:</label>
-                                <input type="number" id="current-chapter" min="1" value="1">
-                                <button class="btn btn-primary" id="save-reading-btn">Save Progress</button>
-                            </div>
-                            <div class="reading-stats">
-                                <p>Days with Bible reading: <span id="bible-days">0</span></p>
-                                <p>Current streak: <span id="bible-streak">0</span> days</p>
-                            </div>
-                        </div>
-
-                        <div class="memory-verses card">
-                            <h4>Memory Verses for Temptation</h4>
-                            <div class="verse-cards" id="memory-verses">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                        </div>
-
-                        <div class="prayer-journal card">
-                            <h4>Prayer Requests</h4>
-                            <div class="prayer-list" id="prayer-list">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                            <div class="add-prayer">
-                                <input type="text" id="new-prayer-input" placeholder="Add a prayer request...">
-                                <button class="btn btn-primary" id="add-prayer-btn">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Statistics Page -->
-                <section id="stats-page" class="page">
-                    <div class="page-header">
-                        <h3>&#128200; Your Statistics</h3>
-                    </div>
-                    <div class="stats-container">
-                        <div class="overview-stats card">
-                            <h4>Overall Progress</h4>
-                            <div class="stats-grid large">
-                                <div class="stat-item">
-                                    <span class="stat-value" id="total-days-tracked">0</span>
-                                    <span class="stat-label">Days Tracked</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" id="avg-completion">0%</span>
-                                    <span class="stat-label">Avg Daily Completion</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" id="total-workouts">0</span>
-                                    <span class="stat-label">Workouts</span>
-                                </div>
-                                <div class="stat-item">
-                                    <span class="stat-value" id="total-applications">0</span>
-                                    <span class="stat-label">Job Applications</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="habit-breakdown card">
-                            <h4>Habit Completion Rates</h4>
-                            <div id="habit-stats-chart" class="habit-bars">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                        </div>
-
-                        <div class="weekly-heatmap card">
-                            <h4>This Week's Activity</h4>
-                            <div id="weekly-heatmap" class="heatmap">
-                                <!-- Populated by JavaScript -->
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </main>
-    </div>
-
-    <!-- Modals -->
-    <div id="modal-overlay" class="modal-overlay hidden">
-        <div id="modal" class="modal">
-            <div class="modal-header">
-                <h3 id="modal-title">Modal Title</h3>
-                <button class="modal-close" id="modal-close">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Dynamic content -->
             </div>
         </div>
     </div>
 
+    <div class="app-container">
+        <!-- Mobile Nav -->
+        <nav class="mobile-nav">
+            <button class="nav-btn active" data-page="home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></button>
+            <button class="nav-btn" data-page="quests"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Quests</span></button>
+            <button class="panic-btn-nav" id="panic-btn-main"><span>&#128287;</span></button>
+            <button class="nav-btn" data-page="devotional"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Word</span></button>
+            <button class="nav-btn" data-page="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg><span>Stats</span></button>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"><div class="logo-icon">&#9876;</div><div class="logo-text"><h1>Life Quest</h1><span>Level Up Your Life</span></div></div>
+            </div>
+            <div class="character-card">
+                <div class="character-avatar"><div class="avatar-ring"></div><div class="avatar-icon">&#129497;</div><div class="level-badge" id="level-badge">1</div></div>
+                <div class="character-info"><h3 id="character-name">Warrior</h3><div class="character-title" id="character-title">Novice Adventurer</div></div>
+                <div class="xp-bar-container"><div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div><div class="xp-text"><span id="current-xp">0</span> / <span id="next-level-xp">100</span> XP</div></div>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="sidebar-btn active" data-page="home"><span class="sidebar-icon">&#127968;</span><span>Home Base</span></button>
+                <button class="sidebar-btn" data-page="quests"><span class="sidebar-icon">&#9876;</span><span>Daily Quests</span></button>
+                <button class="sidebar-btn" data-page="devotional"><span class="sidebar-icon">&#128214;</span><span>Daily Word</span></button>
+                <button class="sidebar-btn" data-page="journal"><span class="sidebar-icon">&#128221;</span><span>Battle Log</span></button>
+                <button class="sidebar-btn" data-page="stats"><span class="sidebar-icon">&#128202;</span><span>Analytics</span></button>
+                <button class="sidebar-btn" data-page="settings"><span class="sidebar-icon">&#9881;</span><span>Settings</span></button>
+            </nav>
+            <div class="sidebar-footer"><button class="panic-btn-sidebar" id="panic-btn-sidebar"><span>&#128287;</span><span>PANIC BUTTON</span></button></div>
+        </aside>
+
+        <main class="main-content">
+            <!-- HOME -->
+            <section id="home-page" class="page active">
+                <header class="page-header-main">
+                    <div class="greeting"><h1 id="greeting-text">Good Morning, Warrior</h1><p id="date-display"></p></div>
+                    <div class="streak-badge"><span class="streak-fire">&#128293;</span><span id="main-streak">0</span><span class="streak-label">Day Streak</span></div>
+                </header>
+                <div class="level-hero glass-card">
+                    <div class="level-info">
+                        <div class="current-level"><span class="level-label">Level</span><span class="level-number" id="hero-level">1</span></div>
+                        <div class="level-details"><h2 id="hero-title">Novice Adventurer</h2><p id="hero-description">Complete daily quests to gain XP and level up!</p></div>
+                    </div>
+                    <div class="level-progress-ring">
+                        <svg viewBox="0 0 120 120"><circle class="progress-bg" cx="60" cy="60" r="54"/><circle class="progress-fill" id="level-progress-ring" cx="60" cy="60" r="54"/></svg>
+                        <div class="progress-center"><span id="level-percent">0%</span></div>
+                    </div>
+                </div>
+                <div class="scripture-card glass-card">
+                    <div class="scripture-header"><span class="scripture-icon">&#128214;</span><span>Today's Verse</span><span class="scripture-day" id="scripture-day">Day 1</span></div>
+                    <blockquote class="scripture-text" id="daily-verse-text">Loading...</blockquote>
+                    <cite class="scripture-ref" id="daily-verse-ref"></cite>
+                </div>
+                <div class="quick-actions-grid">
+                    <button class="action-card" data-quest="bible"><div class="action-icon">&#128214;</div><span>Read Bible</span><div class="action-xp">+20 XP</div></button>
+                    <button class="action-card" data-quest="workout"><div class="action-icon">&#128170;</div><span>Workout</span><div class="action-xp">+25 XP</div></button>
+                    <button class="action-card" data-quest="job"><div class="action-icon">&#128188;</div><span>Apply to Job</span><div class="action-xp">+30 XP</div></button>
+                    <button class="action-card" data-quest="skills"><div class="action-icon">&#127919;</div><span>Build Skills</span><div class="action-xp">+25 XP</div></button>
+                    <button class="action-card" data-quest="business"><div class="action-icon">&#128640;</div><span>Business</span><div class="action-xp">+30 XP</div></button>
+                    <button class="action-card" data-quest="healthy"><div class="action-icon">&#129367;</div><span>Eat Healthy</span><div class="action-xp">+15 XP</div></button>
+                </div>
+                <div class="today-progress glass-card">
+                    <h3>Today's Quest Progress</h3>
+                    <div class="quest-progress-bar"><div class="quest-progress-fill" id="today-progress-fill"></div></div>
+                    <div class="quest-progress-text"><span id="quests-completed">0</span> / <span id="quests-total">8</span> Quests Complete</div>
+                </div>
+                <div class="purity-shield glass-card">
+                    <div class="shield-icon">&#128737;</div>
+                    <div class="shield-content"><h3>Purity Shield</h3><div class="shield-days"><span class="shield-number" id="purity-days-home">0</span><span class="shield-label">Days Strong</span></div><p class="shield-message" id="purity-message-home">Start your journey today</p></div>
+                    <button class="shield-reset-btn" id="reset-shield-btn">Reset</button>
+                </div>
+            </section>
+
+            <!-- QUESTS -->
+            <section id="quests-page" class="page">
+                <header class="page-header-main"><div><h1>&#9876; Daily Quests</h1><p>Complete quests to earn XP and level up</p></div></header>
+                <div class="quests-summary glass-card">
+                    <div class="summary-stat"><span class="stat-value" id="xp-today">0</span><span class="stat-label">XP Today</span></div>
+                    <div class="summary-stat"><span class="stat-value" id="quests-done">0/8</span><span class="stat-label">Quests Done</span></div>
+                    <div class="summary-stat"><span class="stat-value" id="bonus-xp">0</span><span class="stat-label">Bonus XP</span></div>
+                </div>
+                <div class="quests-list" id="quests-list"></div>
+                <div class="add-quest-section"><button class="btn-add-quest" id="add-quest-btn"><span>+</span> Add Custom Quest</button></div>
+            </section>
+
+            <!-- DEVOTIONAL -->
+            <section id="devotional-page" class="page">
+                <header class="page-header-main"><div><h1>&#128214; Daily Devotional</h1><p id="devotional-date"></p></div></header>
+                <div class="devotional-container">
+                    <div class="devotional-card glass-card">
+                        <div class="devotional-header"><span class="devotional-day" id="devo-day">Day 1 of 365</span><span class="devotional-theme" id="devo-theme">Faith</span></div>
+                        <div class="devotional-verse"><blockquote id="devo-verse">Loading...</blockquote><cite id="devo-verse-ref"></cite></div>
+                        <div class="devotional-content"><h3 id="devo-title">Loading...</h3><div class="devotional-text" id="devo-text"></div></div>
+                        <div class="devotional-application"><h4>&#128203; Today's Action Step</h4><p id="devo-action">Loading...</p></div>
+                        <div class="devotional-prayer"><h4>&#128591; Prayer</h4><p id="devo-prayer">Loading...</p></div>
+                        <div class="devotional-actions"><button class="btn-primary" id="mark-read-btn">&#10003; I Read Today's Devotional (+20 XP)</button></div>
+                    </div>
+                    <div class="bible-reading-tracker glass-card">
+                        <h3>&#128218; Bible Reading Progress</h3>
+                        <div class="reading-input">
+                            <select id="bible-book"><option value="">Book</option><option value="Genesis">Genesis</option><option value="Psalms">Psalms</option><option value="Proverbs">Proverbs</option><option value="Matthew">Matthew</option><option value="John">John</option><option value="Romans">Romans</option><option value="James">James</option></select>
+                            <input type="number" id="bible-chapter" placeholder="Ch." min="1">
+                            <button class="btn-secondary" id="log-reading-btn">Log</button>
+                        </div>
+                        <div class="reading-stats"><div class="reading-stat"><span id="chapters-read">0</span><span>Chapters</span></div><div class="reading-stat"><span id="reading-streak">0</span><span>Streak</span></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JOURNAL -->
+            <section id="journal-page" class="page">
+                <header class="page-header-main"><div><h1>&#128221; Battle Log</h1><p>Record your victories</p></div></header>
+                <div class="journal-container">
+                    <div class="journal-prompts glass-card"><h3>Reflection Prompts</h3><ul><li>What battles did I win today?</li><li>Where did I see God working?</li><li>What temptations did I overcome?</li></ul></div>
+                    <div class="journal-entry-section glass-card"><textarea id="journal-textarea" placeholder="Write your thoughts..."></textarea><div class="journal-actions"><button class="btn-primary" id="save-journal-btn">Save Entry (+10 XP)</button></div></div>
+                    <div class="past-entries-section glass-card"><h3>Past Entries</h3><div id="journal-entries-list"></div></div>
+                </div>
+            </section>
+
+            <!-- STATS -->
+            <section id="stats-page" class="page">
+                <header class="page-header-main"><div><h1>&#128202; Analytics</h1><p>Track your growth</p></div></header>
+                <div class="stats-grid">
+                    <div class="stat-card glass-card"><h3>Level Progress</h3><div class="level-chart"><div class="level-tower" id="level-tower"></div><div class="level-info-stats"><div class="info-row"><span>Level</span><span id="stats-level">1</span></div><div class="info-row"><span>Total XP</span><span id="stats-total-xp">0</span></div><div class="info-row"><span>Next Level</span><span id="stats-xp-needed">100</span></div></div></div></div>
+                    <div class="stat-card glass-card"><h3>Streaks</h3><div class="streak-stats-grid"><div class="streak-stat"><span class="streak-stat-value" id="current-streak-stat">0</span><span>Current</span></div><div class="streak-stat"><span class="streak-stat-value" id="best-streak-stat">0</span><span>Best</span></div><div class="streak-stat"><span class="streak-stat-value" id="total-days-stat">0</span><span>Total</span></div><div class="streak-stat"><span class="streak-stat-value" id="victories-stat">0</span><span>Victories</span></div></div></div>
+                    <div class="stat-card glass-card wide"><h3>Weekly Activity</h3><div class="weekly-heatmap" id="weekly-heatmap"></div></div>
+                    <div class="stat-card glass-card wide"><h3>&#127942; Achievements</h3><div class="achievements-grid" id="achievements-grid"></div></div>
+                </div>
+            </section>
+
+            <!-- SETTINGS -->
+            <section id="settings-page" class="page">
+                <header class="page-header-main"><div><h1>&#9881; Settings</h1></div></header>
+                <div class="settings-container">
+                    <div class="settings-section glass-card"><h3>Profile</h3><div class="setting-item"><label>Name</label><input type="text" id="user-name" placeholder="Warrior"></div><button class="btn-primary" id="save-profile-btn">Save</button></div>
+                    <div class="settings-section glass-card"><h3>&#128737; Content Blockers</h3><div class="blocker-links"><a href="https://www.covenanteyes.com" target="_blank" class="blocker-link"><span>&#128737;</span><div><strong>Covenant Eyes</strong><p>Best accountability</p></div></a></div><div class="dns-info"><h4>Free DNS</h4><code>185.228.168.168</code></div></div>
+                    <div class="settings-section glass-card danger-zone"><h3>Data</h3><div class="danger-buttons"><button class="btn-secondary" id="export-data-btn">Export</button><button class="btn-danger" id="reset-data-btn">Reset All</button></div></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Level Up Modal -->
+    <div id="levelup-modal" class="modal-overlay hidden">
+        <div class="levelup-content"><div class="levelup-icon">&#127881;</div><h2>LEVEL UP!</h2><div class="new-level" id="new-level-display">Level 2</div><p class="new-title" id="new-title-display">Apprentice Warrior</p><button class="btn-glow" id="close-levelup">Continue</button></div>
+    </div>
+
+    <!-- Add Quest Modal -->
+    <div id="add-quest-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-card">
+            <h2>Add Custom Quest</h2>
+            <div class="form-group"><label>Quest Name</label><input type="text" id="new-quest-name" placeholder="Morning Meditation"></div>
+            <div class="form-group"><label>XP Reward</label><input type="number" id="new-quest-xp" placeholder="20" min="5" max="50"></div>
+            <div class="form-group"><label>Icon</label><input type="text" id="new-quest-icon" placeholder="&#129496;"></div>
+            <div class="modal-actions"><button class="btn-secondary" id="cancel-quest-btn">Cancel</button><button class="btn-primary" id="save-quest-btn">Add</button></div>
+        </div>
+    </div>
+
+    <div id="toast-container"></div>
+    <script src="devotionals.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

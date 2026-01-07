@@ -1,0 +1,3 @@
+@echo off
+echo Starting Life Mastery Tracker...
+start "" "%~dp0index.html"
