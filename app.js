@@ -1232,43 +1232,82 @@ async function loadBibleChapter(book, chapter) {
     currentBook = book;
     currentChapter = chapter;
 
-    try {
-        // Using Bible API (free, no auth needed, CORS-friendly)
-        const bookName = book.replace(/\+/g, " ");
-        const response = await fetch(`https://bible-api.com/${encodeURIComponent(bookName)}+${chapter}?translation=kjv`);
+    const bookName = book.replace(/\+/g, " ");
 
-        if (!response.ok) throw new Error("Failed to load");
-
-        const data = await response.json();
-
-        if (data.error) throw new Error(data.error);
-
-        // Format verses with verse numbers
-        let formattedText = "";
-        if (data.verses && data.verses.length > 0) {
-            formattedText = data.verses.map(v =>
-                `<span class="verse-num">${v.verse}</span>${v.text}`
-            ).join(" ");
-        } else if (data.text) {
-            formattedText = data.text;
+    // Try multiple APIs as fallbacks
+    const apis = [
+        {
+            name: "bible-api",
+            url: `https://bible-api.com/${encodeURIComponent(bookName + " " + chapter)}?translation=kjv`,
+            parse: (data) => {
+                if (data.error) throw new Error(data.error);
+                if (data.verses && data.verses.length > 0) {
+                    return data.verses.map(v =>
+                        `<span class="verse-num">${v.verse}</span>${v.text}`
+                    ).join(" ");
+                }
+                return data.text || "";
+            }
+        },
+        {
+            name: "bible-go",
+            url: `https://bible-go-api.rkeplin.com/v1/books/${encodeURIComponent(bookName)}/chapters/${chapter}?translation=kjv`,
+            parse: (data) => {
+                if (Array.isArray(data) && data.length > 0) {
+                    return data.map(v =>
+                        `<span class="verse-num">${v.verseId}</span>${v.verse}`
+                    ).join(" ");
+                }
+                throw new Error("No verses found");
+            }
         }
+    ];
 
-        container.innerHTML = `
-            <h4 class="chapter-title">${bookName} ${chapter}</h4>
-            <div class="bible-text">${formattedText}</div>
-        `;
+    for (const api of apis) {
+        try {
+            console.log(`Trying ${api.name}...`);
+            const response = await fetch(api.url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
 
-        // Enable navigation buttons
-        if (prevBtn) prevBtn.disabled = chapter <= 1;
-        if (nextBtn) nextBtn.disabled = false;
+            if (!response.ok) {
+                console.log(`${api.name} failed with status ${response.status}`);
+                continue;
+            }
 
-    } catch (error) {
-        console.error("Bible load error:", error);
-        container.innerHTML = `
-            <p class="bible-error">Unable to load chapter. Try again later.</p>
-            <p class="bible-fallback">You can read online at <a href="https://www.biblegateway.com/passage/?search=${encodeURIComponent(book.replace(/\+/g, " "))}+${chapter}&version=ESV" target="_blank">BibleGateway.com</a></p>
-        `;
+            const data = await response.json();
+            const formattedText = api.parse(data);
+
+            if (formattedText) {
+                container.innerHTML = `
+                    <h4 class="chapter-title">${bookName} ${chapter}</h4>
+                    <div class="bible-text">${formattedText}</div>
+                `;
+
+                if (prevBtn) prevBtn.disabled = chapter <= 1;
+                if (nextBtn) nextBtn.disabled = false;
+                return; // Success!
+            }
+        } catch (error) {
+            console.log(`${api.name} error:`, error.message);
+            continue;
+        }
     }
+
+    // All APIs failed - show embedded reader as fallback
+    console.error("All Bible APIs failed");
+    const bibleGatewayUrl = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(bookName + " " + chapter)}&version=KJV&interface=print`;
+    container.innerHTML = `
+        <p class="bible-error">Unable to load from API.</p>
+        <p class="bible-fallback" style="margin-bottom: 1rem;">
+            <a href="https://www.biblegateway.com/passage/?search=${encodeURIComponent(bookName + " " + chapter)}&version=KJV" target="_blank" style="color: var(--primary);">
+                📖 Open ${bookName} ${chapter} on BibleGateway
+            </a>
+        </p>
+    `;
 }
 
 // Add Bible reader setup to initialization
