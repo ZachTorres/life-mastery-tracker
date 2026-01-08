@@ -49,6 +49,99 @@ const ACHIEVEMENTS = [
 ];
 
 // ==========================================
+// MOTIVATIONAL QUOTES
+// ==========================================
+const MOTIVATIONAL_QUOTES = [
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+    { text: "Hard times create strong men. Strong men create good times.", author: "G. Michael Hopf" },
+    { text: "The pain you feel today will be the strength you feel tomorrow.", author: "Unknown" },
+    { text: "Discipline is choosing between what you want now and what you want most.", author: "Abraham Lincoln" },
+    { text: "A warrior is not about perfection. It's about absolute vulnerability.", author: "Unknown" },
+    { text: "The best time to plant a tree was 20 years ago. The second best time is now.", author: "Chinese Proverb" },
+    { text: "You don't have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+    { text: "The man who moves a mountain begins by carrying away small stones.", author: "Confucius" },
+    { text: "What lies behind us and what lies before us are tiny matters compared to what lies within us.", author: "Ralph Waldo Emerson" },
+    { text: "Be the change you wish to see in the world.", author: "Mahatma Gandhi" },
+    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+    { text: "The only impossible journey is the one you never begin.", author: "Tony Robbins" },
+    { text: "Winners are not people who never fail, but people who never quit.", author: "Unknown" },
+    { text: "Your limitation—it's only your imagination.", author: "Unknown" },
+    { text: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
+    { text: "Great things never come from comfort zones.", author: "Unknown" },
+    { text: "Dream it. Wish it. Do it.", author: "Unknown" },
+    { text: "Success doesn't just find you. You have to go out and get it.", author: "Unknown" },
+    { text: "The harder you work for something, the greater you'll feel when you achieve it.", author: "Unknown" },
+    { text: "Don't stop when you're tired. Stop when you're done.", author: "Unknown" },
+    { text: "Wake up with determination. Go to bed with satisfaction.", author: "Unknown" },
+    { text: "Do something today that your future self will thank you for.", author: "Unknown" },
+    { text: "Little things make big days.", author: "Unknown" },
+    { text: "It's going to be hard, but hard does not mean impossible.", author: "Unknown" },
+    { text: "Don't wait for opportunity. Create it.", author: "Unknown" },
+    { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+    { text: "The only person you should try to be better than is the person you were yesterday.", author: "Unknown" },
+    { text: "Fall seven times, stand up eight.", author: "Japanese Proverb" },
+    { text: "A man who conquers himself is greater than one who conquers a thousand men in battle.", author: "Buddha" },
+];
+
+// ==========================================
+// DAILY PUZZLES
+// ==========================================
+const DAILY_PUZZLES = [
+    { question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", answer: "An echo", options: ["A shadow", "An echo", "A ghost", "The wind"] },
+    { question: "What has keys but no locks, space but no room, and you can enter but can't go inside?", answer: "A keyboard", options: ["A keyboard", "A map", "A house", "A car"] },
+    { question: "The more you take, the more you leave behind. What am I?", answer: "Footsteps", options: ["Memories", "Footsteps", "Breaths", "Photos"] },
+    { question: "What can travel around the world while staying in a corner?", answer: "A stamp", options: ["A stamp", "A spider", "A letter", "A map"] },
+    { question: "What has a head and a tail but no body?", answer: "A coin", options: ["A snake", "A coin", "A drum", "A pin"] },
+    { question: "What gets wetter the more it dries?", answer: "A towel", options: ["A sponge", "A towel", "Paper", "Sand"] },
+    { question: "What can you break even if you never pick it up or touch it?", answer: "A promise", options: ["A promise", "Glass", "A heart", "A rule"] },
+    { question: "What has many teeth but can't bite?", answer: "A comb", options: ["A saw", "A comb", "A zipper", "A gear"] },
+    { question: "What runs all around a backyard yet never moves?", answer: "A fence", options: ["A fence", "A hose", "A shadow", "The grass"] },
+    { question: "If you have me, you want to share me. If you share me, you don't have me. What am I?", answer: "A secret", options: ["Love", "A secret", "Money", "Time"] },
+    { question: "What can fill a room but takes up no space?", answer: "Light", options: ["Air", "Sound", "Light", "Smell"] },
+    { question: "What has words but never speaks?", answer: "A book", options: ["A book", "A painting", "A sign", "A letter"] },
+    { question: "What has one eye but can't see?", answer: "A needle", options: ["A needle", "A storm", "A potato", "A camera"] },
+    { question: "What can you catch but not throw?", answer: "A cold", options: ["A ball", "A cold", "A fish", "A bus"] },
+    { question: "What goes up but never comes down?", answer: "Your age", options: ["A balloon", "Your age", "Smoke", "Temperature"] },
+    { question: "2 + 2 = Fish, 3 + 3 = Eight, 7 + 7 = Triangle. What does 8 + 8 = ?", answer: "Butterfly", options: ["Sixteen", "Butterfly", "Hourglass", "Infinity"] },
+    { question: "What 5-letter word becomes shorter when you add 2 letters to it?", answer: "Short", options: ["Short", "Taller", "Small", "Brief"] },
+    { question: "What begins with T, finishes with T, and has T in it?", answer: "A teapot", options: ["A tent", "A test", "A teapot", "A toast"] },
+    { question: "What is always in front of you but can't be seen?", answer: "The future", options: ["Air", "The future", "Your nose", "Hope"] },
+    { question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", answer: "A map", options: ["A map", "A dream", "A painting", "A globe"] },
+    { question: "What is seen in the middle of March and April that can't be seen at the beginning or end of either month?", answer: "The letter R", options: ["The letter R", "Spring", "Rain", "Easter"] },
+    { question: "A man who was outside in the rain without an umbrella or hat didn't get a single hair on his head wet. How?", answer: "He was bald", options: ["He was bald", "He ran fast", "It was light rain", "He had a hood"] },
+    { question: "What word in the English language does the following: the first two letters signify a male, the first three letters signify a female, the first four letters signify a great, while the entire word signifies a great woman?", answer: "Heroine", options: ["Heroine", "Headline", "Heritage", "Heroism"] },
+    { question: "How many letters are in 'the alphabet'?", answer: "11 (t-h-e a-l-p-h-a-b-e-t)", options: ["26", "11 (t-h-e a-l-p-h-a-b-e-t)", "10", "3"] },
+    { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "The letter M", options: ["Time", "The letter M", "Chance", "Change"] },
+    { question: "A farmer has 17 sheep. All but 9 run away. How many sheep does he have left?", answer: "9", options: ["8", "17", "9", "0"] },
+    { question: "What can you hold in your right hand, but never in your left hand?", answer: "Your left hand", options: ["Your right elbow", "Your left hand", "Nothing", "A secret"] },
+    { question: "If there are 3 apples and you take away 2, how many apples do you have?", answer: "2 (the ones you took)", options: ["1", "2 (the ones you took)", "3", "0"] },
+    { question: "What disappears as soon as you say its name?", answer: "Silence", options: ["A secret", "Silence", "Darkness", "A shadow"] },
+    { question: "I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", answer: "Fire", options: ["Fire", "A plant", "Rust", "Mold"] },
+];
+
+// ==========================================
+// WARRIOR PATH MESSAGES
+// ==========================================
+const PATH_MESSAGES = [
+    "Stay on the hard path. Every day you resist, you become stronger.",
+    "Your discipline today shapes your character tomorrow.",
+    "Champions are made when no one is watching.",
+    "The battle is won in the moments of decision.",
+    "Every temptation resisted is a victory earned.",
+    "Your struggle today is building your strength for tomorrow.",
+    "Real warriors fight battles no one else can see.",
+    "The path to greatness is paved with daily discipline.",
+    "You are not fighting alone. Keep pressing forward.",
+    "Each day of purity is a step toward freedom.",
+    "Your future self will thank you for your choices today.",
+    "Strength doesn't come from what you can do, but from overcoming what you thought you couldn't.",
+    "The fire that forges you is the same fire that purifies you.",
+    "Victory belongs to those who refuse to give up.",
+    "Today's discipline is tomorrow's freedom.",
+];
+
+// ==========================================
 // STATE MANAGEMENT
 // ==========================================
 let state = {
@@ -90,8 +183,8 @@ let state = {
     morningPureToday: false,
     eveningPureToday: false,
 
-    // Achievement bonus clicks
-    achievementBonusClicks: {}, // Track bonus XP clicks per achievement
+    // Daily puzzle
+    puzzleSolvedToday: false,
 
     // Journal
     journalEntries: 0,
@@ -142,14 +235,15 @@ function checkNewDay() {
 
     if (lastDate !== today) {
         // Check if streak should continue or reset
+        // Streak = consecutive days with at least 1 quest logged
         if (lastDate) {
             const daysDiff = getDaysDifference(lastDate, today);
-            if (daysDiff > 1) {
-                // Missed days - check if we should penalize
-                const questsCompletedYesterday = Object.keys(state.todayQuests || {}).length;
-                if (questsCompletedYesterday < state.quests.length / 2) {
-                    state.currentStreak = 0;
-                }
+            const hadQuestYesterday = state.questHistory[lastDate] &&
+                Object.keys(state.questHistory[lastDate]).length > 0;
+
+            if (daysDiff > 1 || !hadQuestYesterday) {
+                // Missed a day or didn't log any quests yesterday - reset streak
+                state.currentStreak = 0;
             }
         }
 
@@ -159,6 +253,7 @@ function checkNewDay() {
         state.devotionalReadToday = false;
         state.morningPureToday = false;
         state.eveningPureToday = false;
+        state.puzzleSolvedToday = false;
         state.currentDevotionalOffset = 0;
         state.lastActiveDate = today;
 
@@ -277,18 +372,27 @@ function uncompleteQuest(questId) {
     if (!quest) return;
 
     delete state.todayQuests[questId];
+    state.totalQuestsCompleted = Math.max(0, state.totalQuestsCompleted - 1);
 
     const today = getDateString();
     if (state.questHistory[today]) {
         delete state.questHistory[today][questId];
     }
 
+    // If this was the only quest today, decrement streak
+    const completedToday = Object.keys(state.todayQuests).length;
+    if (completedToday === 0) {
+        state.currentStreak = Math.max(0, state.currentStreak - 1);
+    }
+
     removeXP(quest.xp);
+    showToast(`-${quest.xp} XP: ${quest.name} removed`, "info");
     saveState();
     updateAllDisplays();
 }
 
 function toggleQuest(questId) {
+    // Toggle: if completed, uncomplete it (remove XP). If not completed, complete it.
     if (state.todayQuests[questId]) {
         uncompleteQuest(questId);
     } else {
@@ -309,13 +413,16 @@ function addCustomQuest(name, xp, icon) {
 function updateStreak() {
     const today = getDateString();
     const completedToday = Object.keys(state.todayQuests).length;
-    const threshold = Math.ceil(state.quests.length / 2);
 
-    if (completedToday >= threshold) {
+    // Streak increments when FIRST quest of the day is logged
+    // Additional quests just add XP, not days
+    if (completedToday === 1) {
+        // This is the first quest of the day - increment streak!
         state.currentStreak++;
         if (state.currentStreak > state.bestStreak) {
             state.bestStreak = state.currentStreak;
         }
+        showToast(`Day ${state.currentStreak} streak!`, "success");
     }
 
     saveState();
@@ -682,6 +789,7 @@ function updateAllDisplays() {
     updatePurityTierButtons();
     updateCharacterCard();
     updateStatsPage();
+    updateHomePageContent();
     renderQuests();
     renderDevotional();
     renderAchievements();
@@ -841,6 +949,107 @@ function updateStatsPage() {
     }
 }
 
+// ==========================================
+// HOME PAGE CONTENT (Verse, Quote, Puzzle, Path)
+// ==========================================
+function updateHomePageContent() {
+    const dayOfYear = getDayOfYear();
+
+    // Verse of the Day (from devotionals)
+    const devo = getTodayDevotional();
+    const verseText = document.getElementById("daily-verse-text");
+    const verseRef = document.getElementById("daily-verse-ref");
+    if (verseText) verseText.textContent = `"${devo.verse}"`;
+    if (verseRef) verseRef.textContent = `- ${devo.ref}`;
+
+    // Motivational Quote (rotates daily)
+    const quoteIndex = dayOfYear % MOTIVATIONAL_QUOTES.length;
+    const quote = MOTIVATIONAL_QUOTES[quoteIndex];
+    const motivationText = document.getElementById("daily-motivation");
+    const motivationAuthor = document.getElementById("motivation-author");
+    if (motivationText) motivationText.textContent = `"${quote.text}"`;
+    if (motivationAuthor) motivationAuthor.textContent = `- ${quote.author}`;
+
+    // Daily Puzzle (rotates daily)
+    const puzzleIndex = dayOfYear % DAILY_PUZZLES.length;
+    const puzzle = DAILY_PUZZLES[puzzleIndex];
+    renderDailyPuzzle(puzzle);
+
+    // Warrior's Path Message (rotates daily)
+    const pathIndex = dayOfYear % PATH_MESSAGES.length;
+    const pathMessage = document.getElementById("path-message");
+    if (pathMessage) pathMessage.textContent = PATH_MESSAGES[pathIndex];
+}
+
+function renderDailyPuzzle(puzzle) {
+    const questionEl = document.getElementById("puzzle-question");
+    const optionsEl = document.getElementById("puzzle-options");
+    const resultEl = document.getElementById("puzzle-result");
+    const puzzleCard = document.getElementById("puzzle-card");
+
+    if (!questionEl || !optionsEl) return;
+
+    // If already solved today, show completed state
+    if (state.puzzleSolvedToday) {
+        questionEl.textContent = puzzle.question;
+        optionsEl.innerHTML = "";
+        resultEl.classList.remove("hidden");
+        resultEl.innerHTML = `<span class="puzzle-correct">Completed! The answer was: ${puzzle.answer}</span>`;
+        if (puzzleCard) puzzleCard.classList.add("solved");
+        return;
+    }
+
+    questionEl.textContent = puzzle.question;
+
+    // Shuffle options for variety
+    const shuffledOptions = [...puzzle.options].sort(() => Math.random() - 0.5);
+
+    optionsEl.innerHTML = shuffledOptions.map(option => `
+        <button class="puzzle-option" onclick="checkPuzzleAnswer('${option.replace(/'/g, "\\'")}', '${puzzle.answer.replace(/'/g, "\\'")}')">
+            ${option}
+        </button>
+    `).join("");
+
+    resultEl.classList.add("hidden");
+    if (puzzleCard) puzzleCard.classList.remove("solved");
+}
+
+function checkPuzzleAnswer(selected, correct) {
+    if (state.puzzleSolvedToday) return;
+
+    const resultEl = document.getElementById("puzzle-result");
+    const optionsEl = document.getElementById("puzzle-options");
+    const puzzleCard = document.getElementById("puzzle-card");
+
+    if (selected === correct) {
+        // Correct answer!
+        state.puzzleSolvedToday = true;
+        addXP(10, "Daily puzzle solved!");
+        resultEl.innerHTML = `<span class="puzzle-correct">Correct! +10 XP</span>`;
+        if (puzzleCard) puzzleCard.classList.add("solved");
+        saveState();
+    } else {
+        // Wrong answer - show feedback but let them try again
+        resultEl.innerHTML = `<span class="puzzle-wrong">Not quite. Try again!</span>`;
+    }
+
+    resultEl.classList.remove("hidden");
+
+    // Disable the wrong option
+    if (selected !== correct) {
+        const buttons = optionsEl.querySelectorAll(".puzzle-option");
+        buttons.forEach(btn => {
+            if (btn.textContent.trim() === selected) {
+                btn.classList.add("wrong");
+                btn.disabled = true;
+            }
+        });
+    }
+}
+
+// Make puzzle function globally accessible
+window.checkPuzzleAnswer = checkPuzzleAnswer;
+
 function renderQuests() {
     const container = document.getElementById("quests-list");
     if (!container) return;
@@ -928,52 +1137,15 @@ function renderAchievements() {
 
     container.innerHTML = ACHIEVEMENTS.map(ach => {
         const unlocked = state.unlockedAchievements.includes(ach.id);
-        const bonusClicks = state.achievementBonusClicks[ach.id] || 0;
         return `
-            <div class="achievement ${unlocked ? "unlocked" : ""}" data-id="${ach.id}" onclick="claimAchievementBonus('${ach.id}')">
+            <div class="achievement ${unlocked ? "unlocked" : ""}" data-id="${ach.id}">
                 <span class="achievement-icon">${ach.icon}</span>
                 <span class="achievement-name">${ach.name}</span>
-                ${unlocked ? `<span class="achievement-bonus">+5 XP${bonusClicks > 0 ? ` (×${bonusClicks})` : ""}</span>` : ""}
+                <span class="achievement-desc">${ach.desc}</span>
             </div>
         `;
     }).join("");
 }
-
-function claimAchievementBonus(achievementId) {
-    const unlocked = state.unlockedAchievements.includes(achievementId);
-    if (!unlocked) {
-        showToast("Unlock this achievement first!", "info");
-        return;
-    }
-
-    const ach = ACHIEVEMENTS.find(a => a.id === achievementId);
-    if (!ach) return;
-
-    // Track bonus clicks
-    if (!state.achievementBonusClicks[achievementId]) {
-        state.achievementBonusClicks[achievementId] = 0;
-    }
-    state.achievementBonusClicks[achievementId]++;
-
-    // Add bonus XP (diminishing returns after 3 clicks per day)
-    const clicks = state.achievementBonusClicks[achievementId];
-    const bonusXP = clicks <= 3 ? 5 : Math.max(1, 5 - clicks + 3);
-
-    addXP(bonusXP, `${ach.name} bonus!`);
-
-    // Visual feedback
-    const element = document.querySelector(`.achievement[data-id="${achievementId}"]`);
-    if (element) {
-        element.classList.add("clicked");
-        setTimeout(() => element.classList.remove("clicked"), 300);
-    }
-
-    saveState();
-    renderAchievements();
-}
-
-// Make function globally accessible
-window.claimAchievementBonus = claimAchievementBonus;
 
 function renderWeeklyHeatmap() {
     const container = document.getElementById("weekly-heatmap");

@@ -93,60 +93,68 @@
         </aside>
 
         <main class="main-content">
-            <!-- HOME -->
+            <!-- HOME - Simplified -->
             <section id="home-page" class="page active">
-                <header class="page-header-main">
-                    <div class="greeting"><h1 id="greeting-text">Good Morning, Warrior</h1><p id="date-display"></p></div>
-                    <div class="streak-badge"><span class="streak-fire">&#128293;</span><span id="main-streak">0</span><span class="streak-label">Day Streak</span></div>
-                </header>
-                <div class="level-hero glass-card">
-                    <div class="level-info">
-                        <div class="current-level"><span class="level-label">Level</span><span class="level-number" id="hero-level">1</span></div>
-                        <div class="level-details"><h2 id="hero-title">Novice Adventurer</h2><p id="hero-description">Complete daily quests to gain XP and level up!</p></div>
+                <!-- Hero Stats Row -->
+                <div class="hero-stats">
+                    <div class="hero-stat level-stat">
+                        <span class="stat-icon">&#9876;</span>
+                        <span class="stat-value" id="hero-level">1</span>
+                        <span class="stat-label" id="hero-title">Novice</span>
                     </div>
-                    <div class="level-progress-ring">
-                        <svg viewBox="0 0 120 120"><circle class="progress-bg" cx="60" cy="60" r="54"/><circle class="progress-fill" id="level-progress-ring" cx="60" cy="60" r="54"/></svg>
-                        <div class="progress-center"><span id="level-percent">0%</span></div>
+                    <div class="hero-stat purity-stat">
+                        <span class="stat-icon">&#128737;</span>
+                        <span class="stat-value" id="purity-days-home">0</span>
+                        <span class="stat-label">Days Pure</span>
+                    </div>
+                    <div class="hero-stat streak-stat">
+                        <span class="stat-icon">&#128293;</span>
+                        <span class="stat-value" id="main-streak">0</span>
+                        <span class="stat-label">Day Streak</span>
                     </div>
                 </div>
-                <div class="scripture-card glass-card">
-                    <div class="scripture-header"><span class="scripture-icon">&#128214;</span><span>Today's Verse</span><span class="scripture-day" id="scripture-day">Day 1</span></div>
-                    <blockquote class="scripture-text" id="daily-verse-text">Loading...</blockquote>
-                    <cite class="scripture-ref" id="daily-verse-ref"></cite>
+
+                <!-- Greeting -->
+                <div class="simple-greeting">
+                    <h1 id="greeting-text">Good Morning, Warrior</h1>
+                    <p id="date-display"></p>
                 </div>
-                <div class="quick-actions-grid">
-                    <button class="action-card" data-quest="bible"><div class="action-icon">&#128214;</div><span>Read Bible</span><div class="action-xp">+35 XP</div></button>
-                    <button class="action-card" data-quest="purity"><div class="action-icon">&#128737;</div><span>Stay Pure</span><div class="action-xp">+30 XP</div></button>
-                    <button class="action-card" data-quest="devotional"><div class="action-icon">&#128218;</div><span>Devotional</span><div class="action-xp">+25 XP</div></button>
-                    <button class="action-card" data-quest="workout"><div class="action-icon">&#128170;</div><span>Workout</span><div class="action-xp">+20 XP</div></button>
-                    <button class="action-card" data-quest="job"><div class="action-icon">&#128188;</div><span>Apply to Job</span><div class="action-xp">+20 XP</div></button>
-                    <button class="action-card" data-quest="skills"><div class="action-icon">&#127919;</div><span>Build Skills</span><div class="action-xp">+20 XP</div></button>
+
+                <!-- Verse of the Day -->
+                <div class="verse-card glass-card">
+                    <div class="verse-icon">&#128214;</div>
+                    <blockquote class="verse-text" id="daily-verse-text">Loading...</blockquote>
+                    <cite class="verse-ref" id="daily-verse-ref"></cite>
                 </div>
-                <div class="today-progress glass-card">
-                    <h3>Today's Quest Progress</h3>
-                    <div class="quest-progress-bar"><div class="quest-progress-fill" id="today-progress-fill"></div></div>
-                    <div class="quest-progress-text"><span id="quests-completed">0</span> / <span id="quests-total">8</span> Quests Complete</div>
+
+                <!-- Motivational Quote -->
+                <div class="motivation-card glass-card">
+                    <div class="motivation-icon">&#128170;</div>
+                    <p class="motivation-text" id="daily-motivation">Loading...</p>
+                    <span class="motivation-author" id="motivation-author"></span>
                 </div>
-                <div class="purity-shield glass-card">
-                    <div class="shield-icon">&#128737;</div>
-                    <div class="shield-content">
-                        <h3>Purity Shield</h3>
-                        <div class="shield-days"><span class="shield-number" id="purity-days-home">0</span><span class="shield-label">Days Strong</span></div>
-                        <p class="shield-message" id="purity-message-home">Start your journey today</p>
-                        <div class="purity-tiers">
-                            <button class="tier-btn" id="morning-pure-btn" data-tier="morning">
-                                <span class="tier-icon">&#9728;</span>
-                                <span class="tier-label">Morning Clear</span>
-                                <span class="tier-xp">+15 XP</span>
-                            </button>
-                            <button class="tier-btn" id="evening-pure-btn" data-tier="evening">
-                                <span class="tier-icon">&#127769;</span>
-                                <span class="tier-label">Evening Clear</span>
-                                <span class="tier-xp">+15 XP</span>
-                            </button>
-                        </div>
+
+                <!-- Daily Challenge / Brain Puzzle -->
+                <div class="puzzle-card glass-card" id="puzzle-card">
+                    <div class="puzzle-header">
+                        <span class="puzzle-icon">&#129504;</span>
+                        <span>Daily Mind Challenge</span>
                     </div>
-                    <button class="shield-reset-btn" id="reset-shield-btn">Reset</button>
+                    <div class="puzzle-content" id="puzzle-content">
+                        <p class="puzzle-question" id="puzzle-question">Loading puzzle...</p>
+                        <div class="puzzle-options" id="puzzle-options"></div>
+                        <div class="puzzle-result hidden" id="puzzle-result"></div>
+                    </div>
+                </div>
+
+                <!-- Warrior's Path Message -->
+                <div class="path-message glass-card">
+                    <p id="path-message">Stay on the hard path. Every day you resist, you become stronger.</p>
+                </div>
+
+                <!-- Purity Reset (hidden in corner) -->
+                <div class="purity-reset-section">
+                    <button class="shield-reset-btn" id="reset-shield-btn">Reset Purity Counter</button>
                 </div>
             </section>
 
