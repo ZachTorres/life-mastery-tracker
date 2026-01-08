@@ -825,26 +825,32 @@ function updateLevelDisplay() {
     const levelInfo = getCurrentLevelInfo();
     const progress = getXPProgress();
 
-    // Hero section
+    // Hero section - Level number and title
     const heroLevel = document.getElementById("hero-level");
     const heroTitle = document.getElementById("hero-title");
-    const heroDesc = document.getElementById("hero-description");
-    const levelPercent = document.getElementById("level-percent");
 
     if (heroLevel) heroLevel.textContent = levelInfo.level;
     if (heroTitle) heroTitle.textContent = levelInfo.title;
-    if (heroDesc) heroDesc.textContent = `${progress.xpIntoLevel} / ${progress.xpNeeded} XP to next level`;
-    if (levelPercent) levelPercent.textContent = `${Math.round(progress.percent)}%`;
 
-    // Progress ring
-    const ring = document.getElementById("level-progress-ring");
-    if (ring) {
-        const circumference = 2 * Math.PI * 54;
+    // Home page level ring progress
+    const homeLevelRing = document.getElementById("home-level-ring");
+    if (homeLevelRing) {
+        const circumference = 2 * Math.PI * 52; // r=52
         const offset = circumference - (progress.percent / 100) * circumference;
-        ring.style.strokeDashoffset = offset;
+        homeLevelRing.style.strokeDasharray = circumference;
+        homeLevelRing.style.strokeDashoffset = offset;
+        homeLevelRing.style.stroke = "var(--primary)";
     }
 
-    // XP bar
+    // Home XP bar
+    const homeXpFill = document.getElementById("home-xp-fill");
+    if (homeXpFill) homeXpFill.style.width = `${progress.percent}%`;
+
+    // Home XP text
+    const homeXpText = document.getElementById("home-xp-text");
+    if (homeXpText) homeXpText.textContent = `${progress.xpIntoLevel} / ${progress.xpNeeded} XP`;
+
+    // Old elements (for other pages)
     const xpFill = document.getElementById("xp-fill");
     if (xpFill) xpFill.style.width = `${progress.percent}%`;
 

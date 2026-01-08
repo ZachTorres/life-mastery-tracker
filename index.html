@@ -93,69 +93,91 @@
         </aside>
 
         <main class="main-content">
-            <!-- HOME - Simplified -->
+            <!-- HOME - Clean Mobile Design -->
             <section id="home-page" class="page active">
-                <!-- Hero Stats Row -->
-                <div class="hero-stats">
-                    <div class="hero-stat level-stat">
-                        <span class="stat-icon">&#9876;</span>
-                        <span class="stat-value" id="hero-level">1</span>
-                        <span class="stat-label" id="hero-title">Novice</span>
-                    </div>
-                    <div class="hero-stat purity-stat">
-                        <span class="stat-icon">&#128737;</span>
-                        <span class="stat-value" id="purity-days-home">0</span>
-                        <span class="stat-label">Days Pure</span>
-                    </div>
-                    <div class="hero-stat streak-stat">
-                        <span class="stat-icon">&#128293;</span>
-                        <span class="stat-value" id="main-streak">0</span>
-                        <span class="stat-label">Day Streak</span>
-                    </div>
+                <!-- Greeting Header -->
+                <div class="home-header">
+                    <p class="home-date" id="date-display"></p>
+                    <h1 class="home-greeting" id="greeting-text">Good Morning, Warrior</h1>
                 </div>
 
-                <!-- Greeting -->
-                <div class="simple-greeting">
-                    <h1 id="greeting-text">Good Morning, Warrior</h1>
-                    <p id="date-display"></p>
-                </div>
-
-                <!-- Verse of the Day -->
-                <div class="verse-card glass-card">
-                    <div class="verse-icon">&#128214;</div>
-                    <blockquote class="verse-text" id="daily-verse-text">Loading...</blockquote>
-                    <cite class="verse-ref" id="daily-verse-ref"></cite>
-                </div>
-
-                <!-- Motivational Quote -->
-                <div class="motivation-card glass-card">
-                    <div class="motivation-icon">&#128170;</div>
-                    <p class="motivation-text" id="daily-motivation">Loading...</p>
-                    <span class="motivation-author" id="motivation-author"></span>
-                </div>
-
-                <!-- Daily Challenge / Brain Puzzle -->
-                <div class="puzzle-card glass-card" id="puzzle-card">
-                    <div class="puzzle-header">
-                        <span class="puzzle-icon">&#129504;</span>
-                        <span>Daily Mind Challenge</span>
+                <!-- Level Progress Card - Prominent Display -->
+                <div class="level-card">
+                    <div class="level-ring-container">
+                        <svg class="level-ring" viewBox="0 0 120 120">
+                            <circle class="level-ring-bg" cx="60" cy="60" r="52" />
+                            <circle class="level-ring-progress" id="home-level-ring" cx="60" cy="60" r="52" />
+                        </svg>
+                        <div class="level-ring-content">
+                            <span class="level-number" id="hero-level">1</span>
+                        </div>
                     </div>
-                    <div class="puzzle-content" id="puzzle-content">
-                        <p class="puzzle-question" id="puzzle-question">Loading puzzle...</p>
-                        <div class="puzzle-options" id="puzzle-options"></div>
-                        <div class="puzzle-result hidden" id="puzzle-result"></div>
+                    <div class="level-info">
+                        <span class="level-title" id="hero-title">Novice Adventurer</span>
+                        <div class="xp-bar-mini">
+                            <div class="xp-bar-fill" id="home-xp-fill"></div>
+                        </div>
+                        <span class="xp-text" id="home-xp-text">0 / 100 XP</span>
                     </div>
                 </div>
 
-                <!-- Warrior's Path Message -->
-                <div class="path-message glass-card">
+                <!-- Stats Row - Clean & Spaced -->
+                <div class="stats-row">
+                    <div class="stat-pill purity">
+                        <span class="stat-pill-icon">&#128737;</span>
+                        <div class="stat-pill-content">
+                            <span class="stat-pill-value" id="purity-days-home">0</span>
+                            <span class="stat-pill-label">Days Pure</span>
+                        </div>
+                    </div>
+                    <div class="stat-pill streak">
+                        <span class="stat-pill-icon">&#128293;</span>
+                        <div class="stat-pill-content">
+                            <span class="stat-pill-value" id="main-streak">0</span>
+                            <span class="stat-pill-label">Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Verse - Compact -->
+                <div class="daily-card verse">
+                    <div class="daily-card-header">
+                        <span class="daily-card-icon">&#128214;</span>
+                        <span class="daily-card-title">Verse of the Day</span>
+                    </div>
+                    <p class="daily-card-text" id="daily-verse-text">Loading...</p>
+                    <span class="daily-card-source" id="daily-verse-ref"></span>
+                </div>
+
+                <!-- Daily Quote - Compact -->
+                <div class="daily-card quote">
+                    <div class="daily-card-header">
+                        <span class="daily-card-icon">&#128170;</span>
+                        <span class="daily-card-title">Daily Motivation</span>
+                    </div>
+                    <p class="daily-card-text" id="daily-motivation">Loading...</p>
+                    <span class="daily-card-source" id="motivation-author"></span>
+                </div>
+
+                <!-- Brain Puzzle -->
+                <div class="daily-card puzzle" id="puzzle-card">
+                    <div class="daily-card-header">
+                        <span class="daily-card-icon">&#129504;</span>
+                        <span class="daily-card-title">Mind Challenge</span>
+                        <span class="puzzle-badge" id="puzzle-badge">+10 XP</span>
+                    </div>
+                    <p class="puzzle-question" id="puzzle-question">Loading...</p>
+                    <div class="puzzle-options" id="puzzle-options"></div>
+                    <div class="puzzle-result hidden" id="puzzle-result"></div>
+                </div>
+
+                <!-- Path Message - Minimal -->
+                <div class="path-strip">
                     <p id="path-message">Stay on the hard path. Every day you resist, you become stronger.</p>
                 </div>
 
-                <!-- Purity Reset (hidden in corner) -->
-                <div class="purity-reset-section">
-                    <button class="shield-reset-btn" id="reset-shield-btn">Reset Purity Counter</button>
-                </div>
+                <!-- Purity Reset - Subtle -->
+                <button class="reset-link" id="reset-shield-btn">Reset Purity Counter</button>
             </section>
 
             <!-- QUESTS -->
