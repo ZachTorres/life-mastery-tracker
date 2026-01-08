@@ -85,40 +85,150 @@ const MOTIVATIONAL_QUOTES = [
 ];
 
 // ==========================================
-// DAILY PUZZLES
+// LOGIC PUZZLE GAME SYSTEM
 // ==========================================
-const DAILY_PUZZLES = [
-    { question: "I speak without a mouth and hear without ears. I have no body, but I come alive with the wind. What am I?", answer: "An echo", options: ["A shadow", "An echo", "A ghost", "The wind"] },
-    { question: "What has keys but no locks, space but no room, and you can enter but can't go inside?", answer: "A keyboard", options: ["A keyboard", "A map", "A house", "A car"] },
-    { question: "The more you take, the more you leave behind. What am I?", answer: "Footsteps", options: ["Memories", "Footsteps", "Breaths", "Photos"] },
-    { question: "What can travel around the world while staying in a corner?", answer: "A stamp", options: ["A stamp", "A spider", "A letter", "A map"] },
-    { question: "What has a head and a tail but no body?", answer: "A coin", options: ["A snake", "A coin", "A drum", "A pin"] },
-    { question: "What gets wetter the more it dries?", answer: "A towel", options: ["A sponge", "A towel", "Paper", "Sand"] },
-    { question: "What can you break even if you never pick it up or touch it?", answer: "A promise", options: ["A promise", "Glass", "A heart", "A rule"] },
-    { question: "What has many teeth but can't bite?", answer: "A comb", options: ["A saw", "A comb", "A zipper", "A gear"] },
-    { question: "What runs all around a backyard yet never moves?", answer: "A fence", options: ["A fence", "A hose", "A shadow", "The grass"] },
-    { question: "If you have me, you want to share me. If you share me, you don't have me. What am I?", answer: "A secret", options: ["Love", "A secret", "Money", "Time"] },
-    { question: "What can fill a room but takes up no space?", answer: "Light", options: ["Air", "Sound", "Light", "Smell"] },
-    { question: "What has words but never speaks?", answer: "A book", options: ["A book", "A painting", "A sign", "A letter"] },
-    { question: "What has one eye but can't see?", answer: "A needle", options: ["A needle", "A storm", "A potato", "A camera"] },
-    { question: "What can you catch but not throw?", answer: "A cold", options: ["A ball", "A cold", "A fish", "A bus"] },
-    { question: "What goes up but never comes down?", answer: "Your age", options: ["A balloon", "Your age", "Smoke", "Temperature"] },
-    { question: "2 + 2 = Fish, 3 + 3 = Eight, 7 + 7 = Triangle. What does 8 + 8 = ?", answer: "Butterfly", options: ["Sixteen", "Butterfly", "Hourglass", "Infinity"] },
-    { question: "What 5-letter word becomes shorter when you add 2 letters to it?", answer: "Short", options: ["Short", "Taller", "Small", "Brief"] },
-    { question: "What begins with T, finishes with T, and has T in it?", answer: "A teapot", options: ["A tent", "A test", "A teapot", "A toast"] },
-    { question: "What is always in front of you but can't be seen?", answer: "The future", options: ["Air", "The future", "Your nose", "Hope"] },
-    { question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", answer: "A map", options: ["A map", "A dream", "A painting", "A globe"] },
-    { question: "What is seen in the middle of March and April that can't be seen at the beginning or end of either month?", answer: "The letter R", options: ["The letter R", "Spring", "Rain", "Easter"] },
-    { question: "A man who was outside in the rain without an umbrella or hat didn't get a single hair on his head wet. How?", answer: "He was bald", options: ["He was bald", "He ran fast", "It was light rain", "He had a hood"] },
-    { question: "What word in the English language does the following: the first two letters signify a male, the first three letters signify a female, the first four letters signify a great, while the entire word signifies a great woman?", answer: "Heroine", options: ["Heroine", "Headline", "Heritage", "Heroism"] },
-    { question: "How many letters are in 'the alphabet'?", answer: "11 (t-h-e a-l-p-h-a-b-e-t)", options: ["26", "11 (t-h-e a-l-p-h-a-b-e-t)", "10", "3"] },
-    { question: "What comes once in a minute, twice in a moment, but never in a thousand years?", answer: "The letter M", options: ["Time", "The letter M", "Chance", "Change"] },
-    { question: "A farmer has 17 sheep. All but 9 run away. How many sheep does he have left?", answer: "9", options: ["8", "17", "9", "0"] },
-    { question: "What can you hold in your right hand, but never in your left hand?", answer: "Your left hand", options: ["Your right elbow", "Your left hand", "Nothing", "A secret"] },
-    { question: "If there are 3 apples and you take away 2, how many apples do you have?", answer: "2 (the ones you took)", options: ["1", "2 (the ones you took)", "3", "0"] },
-    { question: "What disappears as soon as you say its name?", answer: "Silence", options: ["A secret", "Silence", "Darkness", "A shadow"] },
-    { question: "I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?", answer: "Fire", options: ["Fire", "A plant", "Rust", "Mold"] },
+
+// Sequence Pattern Puzzles - Find the next number/symbol
+const SEQUENCE_PUZZLES = [
+    { sequence: [2, 6, 18, 54, "?"], answer: 162, options: [108, 162, 148, 216], explanation: "×3 each time" },
+    { sequence: [1, 1, 2, 3, 5, 8, "?"], answer: 13, options: [11, 12, 13, 15], explanation: "Fibonacci: add previous two" },
+    { sequence: [3, 6, 11, 18, 27, "?"], answer: 38, options: [36, 38, 40, 42], explanation: "+3, +5, +7, +9, +11" },
+    { sequence: [1, 4, 9, 16, 25, "?"], answer: 36, options: [30, 34, 36, 49], explanation: "Perfect squares: 1², 2², 3²..." },
+    { sequence: [2, 3, 5, 7, 11, "?"], answer: 13, options: [12, 13, 14, 15], explanation: "Prime numbers" },
+    { sequence: [1, 8, 27, 64, "?"], answer: 125, options: [100, 125, 128, 216], explanation: "Perfect cubes: 1³, 2³, 3³..." },
+    { sequence: [99, 92, 86, 81, 77, "?"], answer: 74, options: [72, 73, 74, 75], explanation: "-7, -6, -5, -4, -3" },
+    { sequence: [2, 5, 11, 23, 47, "?"], answer: 95, options: [71, 83, 95, 99], explanation: "×2 + 1 each time" },
+    { sequence: [1, 2, 6, 24, 120, "?"], answer: 720, options: [480, 600, 720, 840], explanation: "Factorials: 1!, 2!, 3!, 4!, 5!, 6!" },
+    { sequence: [256, 128, 64, 32, "?"], answer: 16, options: [8, 12, 16, 24], explanation: "÷2 each time" },
 ];
+
+// Matrix/Pattern Reasoning Puzzles
+const MATRIX_PUZZLES = [
+    {
+        grid: ["◯", "◯", "●", "◯", "●", "●", "●", "●", "?"],
+        answer: "◯",
+        options: ["◯", "●", "◐", "◑"],
+        explanation: "Each row has increasing filled circles"
+    },
+    {
+        grid: ["→", "↓", "←", "↓", "←", "↑", "←", "↑", "?"],
+        answer: "→",
+        options: ["→", "↓", "←", "↑"],
+        explanation: "Arrows rotate 90° clockwise in each row"
+    },
+    {
+        grid: ["1", "2", "3", "4", "5", "6", "7", "8", "?"],
+        answer: "9",
+        options: ["0", "9", "10", "1"],
+        explanation: "Simple counting sequence"
+    },
+    {
+        grid: ["△", "▢", "◯", "▢", "◯", "△", "◯", "△", "?"],
+        answer: "▢",
+        options: ["△", "▢", "◯", "◇"],
+        explanation: "Each shape appears once per row"
+    },
+    {
+        grid: ["A", "C", "E", "G", "I", "K", "M", "O", "?"],
+        answer: "Q",
+        options: ["P", "Q", "R", "S"],
+        explanation: "Every other letter (odd positions)"
+    },
+];
+
+// Logic Word Problems (College-level)
+const LOGIC_PROBLEMS = [
+    {
+        problem: "If all Bloops are Razzies, and all Razzies are Lazzies, then all Bloops are definitely Lazzies.",
+        answer: "True",
+        options: ["True", "False", "Cannot determine", "Sometimes"],
+        explanation: "Transitive property: A⊂B and B⊂C means A⊂C"
+    },
+    {
+        problem: "A bat and ball cost $1.10. The bat costs $1.00 more than the ball. How much does the ball cost?",
+        answer: "$0.05",
+        options: ["$0.10", "$0.05", "$0.15", "$0.01"],
+        explanation: "Ball = x, Bat = x + 1.00. x + (x + 1.00) = 1.10, so x = 0.05"
+    },
+    {
+        problem: "In a race, you pass the person in 2nd place. What position are you in now?",
+        answer: "2nd",
+        options: ["1st", "2nd", "3rd", "Cannot tell"],
+        explanation: "You take their position, not surpass to 1st"
+    },
+    {
+        problem: "If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?",
+        answer: "5 minutes",
+        options: ["1 minute", "5 minutes", "20 minutes", "100 minutes"],
+        explanation: "Each machine makes 1 widget in 5 min, regardless of count"
+    },
+    {
+        problem: "There's a lily pad in a lake. Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take to cover half of it?",
+        answer: "47 days",
+        options: ["24 days", "47 days", "46 days", "12 days"],
+        explanation: "If it doubles to full on day 48, it was half on day 47"
+    },
+    {
+        problem: "A farmer has 17 sheep. All but 9 die. How many are left?",
+        answer: "9",
+        options: ["8", "9", "17", "0"],
+        explanation: "'All but 9' means 9 remain alive"
+    },
+    {
+        problem: "You have 12 balls. One is heavier. Using a balance scale, what's the minimum weighings needed to find it?",
+        answer: "3",
+        options: ["2", "3", "4", "6"],
+        explanation: "Divide into thirds each time: 12→4→2→1 (log₃12 ≈ 3)"
+    },
+    {
+        problem: "A is B's brother. B is C's sister. C is D's father. How is A related to D?",
+        answer: "Uncle",
+        options: ["Father", "Uncle", "Grandfather", "Cousin"],
+        explanation: "A is sibling to B, B is sibling to C (D's father), so A is D's uncle"
+    },
+];
+
+// Spatial Reasoning Puzzles
+const SPATIAL_PUZZLES = [
+    {
+        problem: "If you fold a paper in half 3 times, then punch 1 hole through all layers, how many holes when unfolded?",
+        answer: "8",
+        options: ["3", "6", "8", "16"],
+        explanation: "2³ = 8 layers, so 8 holes"
+    },
+    {
+        problem: "A cube has 6 faces painted red. If cut into 27 smaller cubes, how many small cubes have exactly 1 red face?",
+        answer: "6",
+        options: ["6", "8", "12", "1"],
+        explanation: "Only the center of each face (6 faces × 1 center each)"
+    },
+    {
+        problem: "How many squares are on a standard 8×8 chessboard? (Count all sizes)",
+        answer: "204",
+        options: ["64", "204", "128", "256"],
+        explanation: "1² + 2² + ... + 8² = 204 (sum of squares)"
+    },
+    {
+        problem: "A clock shows 3:15. What is the angle between the hour and minute hands?",
+        answer: "7.5°",
+        options: ["0°", "7.5°", "15°", "90°"],
+        explanation: "Hour hand moves 0.5° per minute; at 3:15 it's at 97.5°, minute at 90°"
+    },
+    {
+        problem: "You're facing North. You turn left, then do an about-face, then turn right. Which direction are you facing?",
+        answer: "North",
+        options: ["North", "South", "East", "West"],
+        explanation: "N → left → W → about-face → E → right → N"
+    },
+];
+
+// Combine all puzzle types
+const ALL_LOGIC_PUZZLES = {
+    sequence: SEQUENCE_PUZZLES,
+    matrix: MATRIX_PUZZLES,
+    logic: LOGIC_PROBLEMS,
+    spatial: SPATIAL_PUZZLES
+};
 
 // ==========================================
 // WARRIOR PATH MESSAGES
@@ -185,6 +295,9 @@ let state = {
 
     // Daily puzzle
     puzzleSolvedToday: false,
+    lastPuzzleTime: 0,
+    lastPuzzleAttempts: 0,
+    lastPuzzleXP: 0,
 
     // Journal
     journalEntries: 0,
@@ -254,6 +367,9 @@ function checkNewDay() {
         state.morningPureToday = false;
         state.eveningPureToday = false;
         state.puzzleSolvedToday = false;
+        state.lastPuzzleTime = 0;
+        state.lastPuzzleAttempts = 0;
+        state.lastPuzzleXP = 0;
         state.currentDevotionalOffset = 0;
         state.lastActiveDate = today;
 
@@ -976,10 +1092,8 @@ function updateHomePageContent() {
     if (motivationText) motivationText.textContent = `"${quote.text}"`;
     if (motivationAuthor) motivationAuthor.textContent = `- ${quote.author}`;
 
-    // Daily Puzzle (rotates daily)
-    const puzzleIndex = dayOfYear % DAILY_PUZZLES.length;
-    const puzzle = DAILY_PUZZLES[puzzleIndex];
-    renderDailyPuzzle(puzzle);
+    // Daily Logic Puzzle (interactive game)
+    renderDailyPuzzle();
 
     // Warrior's Path Message (rotates daily)
     const pathIndex = dayOfYear % PATH_MESSAGES.length;
@@ -987,62 +1101,244 @@ function updateHomePageContent() {
     if (pathMessage) pathMessage.textContent = PATH_MESSAGES[pathIndex];
 }
 
-function renderDailyPuzzle(puzzle) {
-    const questionEl = document.getElementById("puzzle-question");
-    const optionsEl = document.getElementById("puzzle-options");
-    const resultEl = document.getElementById("puzzle-result");
-    const puzzleCard = document.getElementById("puzzle-card");
+// ==========================================
+// LOGIC PUZZLE GAME - Interactive UI
+// ==========================================
+let currentPuzzle = null;
+let puzzleAttempts = 0;
+let puzzleTimer = null;
+let puzzleStartTime = null;
 
-    if (!questionEl || !optionsEl) return;
+function getTodaysPuzzle() {
+    const dayOfYear = getDayOfYear();
+    const puzzleTypes = ['sequence', 'matrix', 'logic', 'spatial'];
+    const typeIndex = dayOfYear % puzzleTypes.length;
+    const type = puzzleTypes[typeIndex];
+    const puzzles = ALL_LOGIC_PUZZLES[type];
+    const puzzleIndex = Math.floor(dayOfYear / puzzleTypes.length) % puzzles.length;
 
-    // If already solved today, show completed state
+    return { type, puzzle: puzzles[puzzleIndex] };
+}
+
+function renderDailyPuzzle() {
+    const container = document.getElementById("puzzle-card");
+    if (!container) return;
+
+    const { type, puzzle } = getTodaysPuzzle();
+    currentPuzzle = { type, ...puzzle };
+
+    // If already solved today
     if (state.puzzleSolvedToday) {
-        questionEl.textContent = puzzle.question;
-        optionsEl.innerHTML = "";
-        resultEl.classList.remove("hidden");
-        resultEl.innerHTML = `<span class="puzzle-correct">Completed! The answer was: ${puzzle.answer}</span>`;
-        if (puzzleCard) puzzleCard.classList.add("solved");
+        renderSolvedPuzzle(container, puzzle, type);
         return;
     }
 
-    questionEl.textContent = puzzle.question;
+    puzzleAttempts = 0;
+    puzzleStartTime = Date.now();
 
-    // Shuffle options for variety
+    // Render based on puzzle type
+    let puzzleContent = '';
+
+    if (type === 'sequence') {
+        puzzleContent = renderSequencePuzzle(puzzle);
+    } else if (type === 'matrix') {
+        puzzleContent = renderMatrixPuzzle(puzzle);
+    } else if (type === 'logic' || type === 'spatial') {
+        puzzleContent = renderLogicPuzzle(puzzle);
+    }
+
+    container.innerHTML = `
+        <div class="daily-card-header">
+            <span class="daily-card-icon">🧠</span>
+            <span class="daily-card-title">${getPuzzleTypeName(type)}</span>
+            <span class="puzzle-badge" id="puzzle-badge">+15 XP</span>
+        </div>
+        <div class="puzzle-timer" id="puzzle-timer">⏱️ 0:00</div>
+        ${puzzleContent}
+        <div class="puzzle-options" id="puzzle-options"></div>
+        <div class="puzzle-result hidden" id="puzzle-result"></div>
+        <div class="puzzle-attempts" id="puzzle-attempts"></div>
+    `;
+
+    // Render options
+    renderPuzzleOptions(puzzle);
+
+    // Start timer
+    startPuzzleTimer();
+}
+
+function getPuzzleTypeName(type) {
+    const names = {
+        sequence: 'Number Sequence',
+        matrix: 'Pattern Matrix',
+        logic: 'Logic Problem',
+        spatial: 'Spatial Reasoning'
+    };
+    return names[type] || 'Brain Challenge';
+}
+
+function renderSequencePuzzle(puzzle) {
+    return `
+        <div class="sequence-display">
+            ${puzzle.sequence.map((num, i) => `
+                <span class="sequence-item ${num === '?' ? 'sequence-unknown' : ''}">${num}</span>
+            `).join('<span class="sequence-arrow">→</span>')}
+        </div>
+        <p class="puzzle-instruction">What comes next in the sequence?</p>
+    `;
+}
+
+function renderMatrixPuzzle(puzzle) {
+    return `
+        <div class="matrix-grid">
+            ${puzzle.grid.map((cell, i) => `
+                <div class="matrix-cell ${cell === '?' ? 'matrix-unknown' : ''}">${cell}</div>
+            `).join('')}
+        </div>
+        <p class="puzzle-instruction">What replaces the question mark?</p>
+    `;
+}
+
+function renderLogicPuzzle(puzzle) {
+    return `
+        <div class="logic-problem">
+            <p class="problem-text">${puzzle.problem}</p>
+        </div>
+    `;
+}
+
+function renderPuzzleOptions(puzzle) {
+    const optionsEl = document.getElementById("puzzle-options");
+    if (!optionsEl) return;
+
+    // Shuffle options
     const shuffledOptions = [...puzzle.options].sort(() => Math.random() - 0.5);
 
     optionsEl.innerHTML = shuffledOptions.map(option => `
-        <button class="puzzle-option" onclick="checkPuzzleAnswer('${option.replace(/'/g, "\\'")}', '${puzzle.answer.replace(/'/g, "\\'")}')">
+        <button class="puzzle-option" onclick="checkLogicAnswer('${String(option).replace(/'/g, "\\'")}')">
             ${option}
         </button>
     `).join("");
-
-    resultEl.classList.add("hidden");
-    if (puzzleCard) puzzleCard.classList.remove("solved");
 }
 
-function checkPuzzleAnswer(selected, correct) {
+function renderSolvedPuzzle(container, puzzle, type) {
+    const timeSpent = state.lastPuzzleTime || 0;
+    const minutes = Math.floor(timeSpent / 60);
+    const seconds = timeSpent % 60;
+
+    container.innerHTML = `
+        <div class="daily-card-header">
+            <span class="daily-card-icon">✅</span>
+            <span class="daily-card-title">${getPuzzleTypeName(type)}</span>
+            <span class="puzzle-badge solved">Solved!</span>
+        </div>
+        <div class="puzzle-solved-content">
+            <div class="solved-stats">
+                <div class="solved-stat">
+                    <span class="solved-stat-value">${state.lastPuzzleAttempts || 1}</span>
+                    <span class="solved-stat-label">Attempts</span>
+                </div>
+                <div class="solved-stat">
+                    <span class="solved-stat-value">${minutes}:${seconds.toString().padStart(2, '0')}</span>
+                    <span class="solved-stat-label">Time</span>
+                </div>
+                <div class="solved-stat">
+                    <span class="solved-stat-value">+${state.lastPuzzleXP || 15}</span>
+                    <span class="solved-stat-label">XP</span>
+                </div>
+            </div>
+            <div class="puzzle-explanation">
+                <strong>Answer:</strong> ${puzzle.answer}<br>
+                <strong>Explanation:</strong> ${puzzle.explanation}
+            </div>
+        </div>
+    `;
+    container.classList.add("solved");
+}
+
+function startPuzzleTimer() {
+    if (puzzleTimer) clearInterval(puzzleTimer);
+
+    const timerEl = document.getElementById("puzzle-timer");
+    if (!timerEl) return;
+
+    puzzleTimer = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - puzzleStartTime) / 1000);
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        timerEl.textContent = `⏱️ ${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
+}
+
+function checkLogicAnswer(selected) {
     if (state.puzzleSolvedToday) return;
 
     const resultEl = document.getElementById("puzzle-result");
     const optionsEl = document.getElementById("puzzle-options");
+    const attemptsEl = document.getElementById("puzzle-attempts");
     const puzzleCard = document.getElementById("puzzle-card");
 
+    puzzleAttempts++;
+    const correct = String(currentPuzzle.answer);
+
     if (selected === correct) {
-        // Correct answer!
+        // Stop timer
+        if (puzzleTimer) clearInterval(puzzleTimer);
+        const timeSpent = Math.floor((Date.now() - puzzleStartTime) / 1000);
+
+        // Calculate XP based on attempts and time
+        let xpEarned = 15;
+        if (puzzleAttempts === 1) xpEarned = 25; // Perfect bonus
+        else if (puzzleAttempts === 2) xpEarned = 20;
+        else if (puzzleAttempts > 3) xpEarned = 10;
+
+        // Time bonus (under 30 seconds)
+        if (timeSpent < 30 && puzzleAttempts === 1) xpEarned += 5;
+
         state.puzzleSolvedToday = true;
-        addXP(10, "Daily puzzle solved!");
-        resultEl.innerHTML = `<span class="puzzle-correct">Correct! +10 XP</span>`;
+        state.lastPuzzleTime = timeSpent;
+        state.lastPuzzleAttempts = puzzleAttempts;
+        state.lastPuzzleXP = xpEarned;
+
+        // Show success animation
+        resultEl.innerHTML = `
+            <div class="puzzle-success">
+                <span class="success-icon">🎉</span>
+                <span class="success-text">Correct!</span>
+                <span class="success-xp">+${xpEarned} XP</span>
+            </div>
+        `;
+        resultEl.classList.remove("hidden");
+
+        // Disable all options and highlight correct
+        const buttons = optionsEl.querySelectorAll(".puzzle-option");
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            if (btn.textContent.trim() === correct) {
+                btn.classList.add("correct");
+            }
+        });
+
         if (puzzleCard) puzzleCard.classList.add("solved");
+
+        addXP(xpEarned, "Logic puzzle solved!");
         saveState();
+
+        // Show explanation after delay
+        setTimeout(() => {
+            renderDailyPuzzle();
+        }, 2000);
     } else {
-        // Wrong answer - show feedback but let them try again
-        resultEl.innerHTML = `<span class="puzzle-wrong">Not quite. Try again!</span>`;
-    }
+        // Wrong answer
+        resultEl.innerHTML = `<span class="puzzle-wrong">Not quite. Think again!</span>`;
+        resultEl.classList.remove("hidden");
 
-    resultEl.classList.remove("hidden");
+        // Update attempts display
+        if (attemptsEl) {
+            attemptsEl.textContent = `Attempts: ${puzzleAttempts}`;
+        }
 
-    // Disable the wrong option
-    if (selected !== correct) {
+        // Disable wrong option
         const buttons = optionsEl.querySelectorAll(".puzzle-option");
         buttons.forEach(btn => {
             if (btn.textContent.trim() === selected) {
@@ -1050,11 +1346,16 @@ function checkPuzzleAnswer(selected, correct) {
                 btn.disabled = true;
             }
         });
+
+        // Hint after 3 wrong attempts
+        if (puzzleAttempts >= 3) {
+            resultEl.innerHTML += `<div class="puzzle-hint">💡 Hint: ${currentPuzzle.explanation.split(':')[0]}...</div>`;
+        }
     }
 }
 
 // Make puzzle function globally accessible
-window.checkPuzzleAnswer = checkPuzzleAnswer;
+window.checkLogicAnswer = checkLogicAnswer;
 
 function renderQuests() {
     const container = document.getElementById("quests-list");
